@@ -1,0 +1,44 @@
+XBE_TITLE = lvgl-xbox
+GEN_XISO = $(XBE_TITLE).iso
+NXDK_SDL = y
+
+#Include my files
+SRCS += \
+	$(CURDIR)/src/example.c \
+	$(CURDIR)/src/input_test.c \
+	$(CURDIR)/3rdparty/lvgl-sdl/lv_drv/lv_sdl_drv_input.c \
+	$(CURDIR)/3rdparty/lvgl-sdl/lv_drv/lv_sdl_drv_display.c \
+	$(CURDIR)/3rdparty/lvgl-sdl/lv_drv/lv_if_drv_filesystem.c
+CFLAGS += \
+	-I$(CURDIR)/include \
+	-I$(CURDIR)/3rdparty/lvgl-sdl \
+	-I$(CURDIR)/3rdparty/lvgl-sdl/lv_drv \
+	-O2 \
+	-DMAKE_EXAMPLE
+
+#Include lvgl main library
+SRCS +=	\
+	$(wildcard $(CURDIR)/3rdparty/lvgl-sdl/lvgl/src/lv_core/*.c) \
+	$(wildcard $(CURDIR)/3rdparty/lvgl-sdl/lvgl/src/lv_draw/*.c) \
+	$(wildcard $(CURDIR)/3rdparty/lvgl-sdl/lvgl/src/lv_font/*.c) \
+	$(wildcard $(CURDIR)/3rdparty/lvgl-sdl/lvgl/src/lv_gpu/*.c) \
+	$(wildcard $(CURDIR)/3rdparty/lvgl-sdl/lvgl/src/lv_hal/*.c) \
+	$(wildcard $(CURDIR)/3rdparty/lvgl-sdl/lvgl/src/lv_misc/*.c) \
+	$(wildcard $(CURDIR)/3rdparty/lvgl-sdl/lvgl/src/lv_themes/*.c) \
+	$(wildcard $(CURDIR)/3rdparty/lvgl-sdl/lvgl/src/lv_widgets/*.c)
+CFLAGS += \
+	-I$(CURDIR)/3rdparty/lvgl-sdl/lvgl/src
+
+#Include lv_examples
+SRCS +=	\
+	$(wildcard $(CURDIR)/3rdparty/lvgl-sdl/example/lv_examples/src/lv_demo_benchmark/*.c) \
+	$(wildcard $(CURDIR)/3rdparty/lvgl-sdl/example/lv_examples/src/lv_demo_stress/*.c) \
+	$(wildcard $(CURDIR)/3rdparty/lvgl-sdl/example/lv_examples/src/lv_demo_widgets/*.c) \
+	$(wildcard $(CURDIR)/3rdparty/lvgl-sdl/example/lv_examples/src/lv_demo_ex_get_started/*.c) \
+	$(wildcard $(CURDIR)/3rdparty/lvgl-sdl/example/lv_examples/src/lv_demo_ex_style/*.c) \
+	$(wildcard $(CURDIR)/3rdparty/lvgl-sdl/example/lv_examples/src/lv_demo_ex_widgets/*.c) \
+	$(wildcard $(CURDIR)/3rdparty/lvgl-sdl/example/lv_examples/assets/*.c)
+CFLAGS += \
+	-I$(CURDIR)/3rdparty/lvgl-sdl/example/lv_examples
+
+include $(NXDK_DIR)/Makefile
