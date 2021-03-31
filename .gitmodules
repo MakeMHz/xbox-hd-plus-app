@@ -1,3 +1,15 @@
 [submodule "3rdparty/lvgl-sdl"]
 	path = 3rdparty/lvgl-sdl
 	url = https://github.com/Ryzee119/lvgl-sdl.git
+[submodule "3rdparty/json"]
+	path = 3rdparty/json
+	url = https://github.com/nlohmann/json.git
+[submodule "3rdparty/curlpp"]
+	path = 3rdparty/curlpp
+	url = https://github.com/jpbarrette/curlpp.git
+[submodule "3rdparty/cpr"]
+	path = 3rdparty/cpr
+	url = https://github.com/whoshuu/cpr.git
+[submodule "3rdparty/semver-utils"]
+	path = 3rdparty/semver-utils
+	url = https://github.com/emcrisostomo/semver-utils
