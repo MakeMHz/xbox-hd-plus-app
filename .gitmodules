@@ -13,3 +13,6 @@
 [submodule "3rdparty/semver-utils"]
 	path = 3rdparty/semver-utils
 	url = https://github.com/emcrisostomo/semver-utils
+[submodule "3rdparty/semver.c"]
+	path = 3rdparty/semver.c
+	url = git@github.com:h2non/semver.c.git

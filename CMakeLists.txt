@@ -44,8 +44,13 @@ file(GLOB LVGL_SOURCE_FILES
 
     #
     "${PROJECT_DIR}/src/main.cpp"
-    "${PROJECT_DIR}/src/update.cpp"
+    "${PROJECT_DIR}/src/App.cpp"
+    "${PROJECT_DIR}/src/Downloader.cpp"
+    "${PROJECT_DIR}/src/Update.cpp"
+    "${PROJECT_DIR}/src/EEPROM.cpp"
+    "${PROJECT_DIR}/src/Scene.cpp"
     "${PROJECT_DIR}/src/scenes/*.cpp"
+    "${PROJECT_DIR}/src/lvgl-extra/*.cpp"
     "${PROJECT_DIR}/assets/*.c"
 )
 add_executable(lvgl_example ${LVGL_SOURCE_FILES})
@@ -59,6 +64,7 @@ target_link_libraries(lvgl_example ${SDL2_LIBRARY})
 # My example project includes (Change this for your own project)
 include_directories(${PROJECT_DIR})
 include_directories(${PROJECT_DIR}/include)
+include_directories(${PROJECT_DIR}/src)
 
 # My lvgl driver includes
 include_directories(${LVDRV_DIR})
