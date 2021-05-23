@@ -65,7 +65,7 @@ int main_app(void)
     Scene *currentScene = new SceneRoot();
 
     // Main render loop
-    while (!get_quit_event())
+    while(!get_quit_event())
     {
       if(load_scene != current_scene) {
             delete currentScene;
@@ -123,7 +123,8 @@ int main_app(void)
 
 uint8_t firmware_version[3] = { 0 };
 lv_obj_t *label_firmware;
-void drawFirmwareVersion() {
+void drawFirmwareVersion()
+{
     ULONG smbus_read;
 
     label_firmware = lv_label_create(lv_scr_act(), NULL);
@@ -152,7 +153,8 @@ void drawFirmwareVersion() {
 }
 
 lv_obj_t *label_software;
-void drawSoftwareVersion() {
+void drawSoftwareVersion()
+{
     label_software = lv_label_create(lv_scr_act(), NULL);
     lv_obj_set_pos(label_software, 30, 380);
 
@@ -162,7 +164,8 @@ void drawSoftwareVersion() {
 
 uint8_t kernel_patch_version[3] = { 0 };
 lv_obj_t *label_patch;
-void drawPatchVersion() {
+void drawPatchVersion()
+{
     label_patch = lv_label_create(lv_scr_act(), NULL);
     lv_obj_set_pos(label_patch, 30, 400);
 

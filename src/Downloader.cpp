@@ -28,11 +28,13 @@ Downloader::Downloader(const char *server_name, uint16_t port, const char *uri, 
     return;
 }
 
-uint8_t Downloader::getProgress() {
+uint8_t Downloader::getProgress()
+{
     return progress;
 }
 
-uint16_t Downloader::getStatus() {
+uint16_t Downloader::getStatus()
+{
     return (error == ERR_OK) ? 200 : 400;
 }
 

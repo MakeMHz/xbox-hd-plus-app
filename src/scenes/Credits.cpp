@@ -14,7 +14,8 @@ static void ButtonEventHandler(lv_obj_t * obj, lv_event_t event)
     scene->OnObjectEvent(obj, event);
 }
 
-Credits::Credits() {
+Credits::Credits()
+{
     // Set the size and position of our scene
     lv_obj_set_size(cont, 320, 420);
     lv_obj_set_pos(screen, 380, 20);

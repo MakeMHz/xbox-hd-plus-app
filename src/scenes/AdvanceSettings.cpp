@@ -19,7 +19,8 @@ static void ButtonEventHandler(lv_obj_t * obj, lv_event_t event) {
     scene->OnObjectEvent(obj, event);
 }
 
-AdvanceSettings::AdvanceSettings() {
+AdvanceSettings::AdvanceSettings()
+{
     // Set the size and position of our scene
     lv_obj_set_size(cont, 320, 420);
     lv_obj_set_pos(screen, 380, 20);
@@ -56,7 +57,8 @@ AdvanceSettings::AdvanceSettings() {
     WarpObjectReset(group);
 }
 
-void AdvanceSettings::CreateLineBreak() {
+void AdvanceSettings::CreateLineBreak()
+{
     // Create an array for the points of the line
     static lv_point_t line_points[] = { { 0, 0 }, { 300 - 10, 0 } };
 
@@ -99,6 +101,7 @@ lv_obj_t *AdvanceSettings::CreateSubSceneButton(const char *text) {
 
 AdvanceSettings::~AdvanceSettings(void)
 {
+    // TODO: Clean up all of the other objects.
     lv_obj_del(screen);
 }
 

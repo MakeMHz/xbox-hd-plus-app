@@ -43,7 +43,8 @@ static void packet_timer(void *arg)
     sys_timeout(PKT_TMR_INTERVAL, packet_timer, NULL);
 }
 
-void init_networking() {
+void init_networking()
+{
     IP4_ADDR(&gw, 0,0,0,0);
     IP4_ADDR(&ipaddr, 0,0,0,0);
     IP4_ADDR(&netmask, 0,0,0,0);
@@ -56,7 +57,7 @@ void init_networking() {
 
     g_pnetif = netif_add(&nforce_netif, &ipaddr, &netmask, &gw,
                             NULL, nforceif_init, ethernet_input);
-    if (!g_pnetif) {
+    if(!g_pnetif) {
         debugPrint("netif_add failed\n");
         network_init = false;
         return;
@@ -70,7 +71,7 @@ void init_networking() {
     packet_timer(NULL);
 
     debugPrint("Waiting for DHCP...\n");
-    while (dhcp_supplied_address(g_pnetif) == 0)
+    while(dhcp_supplied_address(g_pnetif) == 0)
         NtYieldExecution();
 
     network_init = false;

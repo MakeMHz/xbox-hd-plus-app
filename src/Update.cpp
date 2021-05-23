@@ -25,7 +25,8 @@ static void StateTaskHandler(lv_task_t * task) {
     scene->StateTask(task);
 }
 
-Update::Update() {
+Update::Update()
+{
     // Mount the C partition
     nxMountDrive('C', "\\Device\\Harddisk0\\Partition2\\");
 
@@ -34,11 +35,13 @@ Update::Update() {
         init_networking();
 }
 
-Update::~Update(void) {
+Update::~Update(void)
+{
     // TODO: Shouldn't have to worry about this for now since the system is forced to restart at the end
 }
 
-void Update::check() {
+void Update::check()
+{
     status_text = lv_msgbox_create(lv_scr_act(), NULL);
     lv_msgbox_set_text(status_text, "Loading config file");
 
