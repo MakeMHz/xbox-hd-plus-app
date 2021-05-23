@@ -59,15 +59,15 @@ int main_app(void)
     gEEPROM = new EEPROM();
     update = new Update();
 
-	Scene *currentScene = new SceneRoot();
+    Scene *currentScene = new SceneRoot();
 
-	// Main render loop
+    // Main render loop
     while (!get_quit_event())
     {
-		if(load_scene != current_scene) {
+      if(load_scene != current_scene) {
             delete currentScene;
 
-			switch(load_scene) {
+        switch(load_scene) {
             case SCENE::ROOT:
                 currentScene = new SceneRoot();
                 current_scene = load_scene;
