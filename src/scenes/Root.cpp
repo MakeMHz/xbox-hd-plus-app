@@ -57,12 +57,15 @@ lv_obj_t *SceneRoot::CreateSubSceneButton(const char *text) {
 
 SceneRoot::~SceneRoot(void)
 {
+    // TODO: Clean up all of the other objects.
     lv_obj_del(screen);
 }
 
 void SceneRoot::OnObjectEvent(lv_obj_t* obj, lv_event_t event)
 {
+    // Check if the update process is running
     if(update->current_state != update->UPDATE_LOAD_INIT) {
+        // If the update is 'done', or has failed, then allow the user to reboot with the B button.
         if(update->current_state == update->UPDATE_DONE && event == LV_EVENT_CANCEL) {
             XLaunchXBE("C:\\xboxhd\\default.xbe");
         }

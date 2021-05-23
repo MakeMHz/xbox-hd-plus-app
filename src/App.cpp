@@ -55,6 +55,9 @@ int main_app(void)
 
     // TODO: Verify patch.bin is loaded
 
+    // TODO: Verify that we launched from C://xboxhd//default.xbe
+    // If it's from the DVD drive then prompt to install? Or at least show an warning/error.
+
     //
     gEEPROM = new EEPROM();
     update = new Update();

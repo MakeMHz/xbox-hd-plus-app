@@ -54,6 +54,7 @@ InterpolationSettings::InterpolationSettings() {
 
 InterpolationSettings::~InterpolationSettings(void)
 {
+    // TODO: Clean up all of the other objects.
     lv_obj_del(screen);
 }
 

@@ -36,6 +36,7 @@ SceneSelfTest::SceneSelfTest() {
 }
 
 SceneSelfTest::~SceneSelfTest(void) {
+    // TODO: Clean up all of the other objects.
     lv_obj_del(screen);
 }
 
