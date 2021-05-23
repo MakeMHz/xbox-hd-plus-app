@@ -15,11 +15,6 @@
 #include "Network.h"
 #include "Update.h"
 
-static void ButtonEventHandler(lv_obj_t * obj, lv_event_t event)
-{
-    Update* scene = static_cast<Update *>(obj->user_data);
-    scene->OnObjectEvent(obj, event);
-}
 static void StateTaskHandler(lv_task_t * task) {
     Update* scene = static_cast<Update *>(task->user_data);
     scene->StateTask(task);

@@ -43,11 +43,6 @@ ButtonGroup::ButtonGroup(lv_obj_t *cont, lv_group_t *group_target, const char *l
     //
     if(value != NULL)
         lv_btnmatrix_set_btn_ctrl(buttons, *value, LV_BTNMATRIX_CTRL_CHECK_STATE);
-
-    // Register callbacks
-   // lv_obj_set_user_data(buttons, static_cast<lv_obj_user_data_t>(this));
-    //lv_obj_set_signal_cb(buttons, MatrixEventHandler);
-   // lv_obj_set_event_cb(buttons,  ButtonEventHandler);
 }
 
 ButtonGroup::~ButtonGroup(void)
