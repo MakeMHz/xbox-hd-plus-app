@@ -3,6 +3,7 @@
 #include <semver.h>
 #include <xboxkrnl/xboxkrnl.h>
 
+// Version of this software
 semver_t current_version = { 2, 0, 0 };
 
 // The HD+ firmware version that this copy of the software supports.
