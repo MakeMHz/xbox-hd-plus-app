@@ -26,17 +26,16 @@ VideoSettings::VideoSettings()
     lv_cont_set_layout(cont, LV_LAYOUT_COLUMN_LEFT);
 
     //
-    uint8_t value = 1;
-    buttonMatrix[0] = new ButtonGroup(cont, group, "Output Resolution", optionResolution, &value);
+    buttonMatrix[0] = new ButtonGroup(cont, group, "Output Resolution", optionResolution, (uint8_t *)&gEEPROM->current.output_resolution);
     setButtonMtxStyles(buttonMatrix[0]->buttons);
     lv_obj_set_size(buttonMatrix[0]->buttons, lv_obj_get_width(cont) - 28, 100);
 
     //
-    buttonMatrix[1] = new ButtonGroup(cont, group, "4:3 Widescreen", optionWidescreen, &value);
+    buttonMatrix[1] = new ButtonGroup(cont, group, "4:3 Widescreen", optionWidescreen, (uint8_t *)&gEEPROM->current.widescreen);
     setButtonMtxStyles(buttonMatrix[1]->buttons);
 
     //
-    buttonMatrix[2] = new ButtonGroup(cont, group, "Audio", optionAudio, &value);
+    buttonMatrix[2] = new ButtonGroup(cont, group, "Audio", optionAudio, (uint8_t *)&gEEPROM->current.audo_comp);
     setButtonMtxStyles(buttonMatrix[2]->buttons);
 
     // Register a callbacks
@@ -62,11 +61,25 @@ void VideoSettings::OnObjectEvent(lv_obj_t* obj, lv_event_t event)
     // Preform warp check on event
     if(WarpObjectOnEvent(obj, event, group)) { return; }
 
+    if(event == LV_EVENT_VALUE_CHANGED) {
+        if(obj == buttonMatrix[0]->buttons)
+            gEEPROM->current.output_resolution = (OUTPUT_RESOLUTION)lv_btnmatrix_get_active_btn(obj);
+        if(obj == buttonMatrix[1]->buttons)
+            gEEPROM->current.widescreen = (OUTPUT_WIDESCREEN)lv_btnmatrix_get_active_btn(obj);
+        if(obj == buttonMatrix[2]->buttons)
+            gEEPROM->current.audo_comp = (AUDIO_COMP)lv_btnmatrix_get_active_btn(obj);
+    }
+
     if(event == LV_EVENT_KEY)
     {
         uint32_t event_key = *(uint32_t *)lv_event_get_data();
 
-        if(event_key == LV_KEY_ESC)
+        if(event_key == LV_KEY_ESC) {
+            // Save EEPROM
+            gEEPROM->save();
+
+            // Return to previous scene
             load_scene = SCENE::ROOT;
+        }
     }
 }

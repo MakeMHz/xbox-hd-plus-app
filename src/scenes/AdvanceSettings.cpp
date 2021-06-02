@@ -6,10 +6,7 @@
 #include "lvgl-extra/WarpObject.h"
 
 #include "App.h"
-#include "EEPROM.h"
 #include "scenes/AdvanceSettings.h"
-
-extern EEPROM *gEEPROM;
 
 static const char *optionColorSpace[] = { "Auto", "YCBCR", "RGB", "" };
 static const char *optionUpscaling[]  = { "Truncate", "Bilinear", "" };
@@ -27,15 +24,11 @@ AdvanceSettings::AdvanceSettings()
     lv_cont_set_layout(cont, LV_LAYOUT_COLUMN_LEFT);
 
     //
-    EEPROM_T mEEPROM = gEEPROM->get();
-
-    //
-    uint8_t value = 1;
-    buttonMatrix[0] = new ButtonGroup(cont, group, "Colorspace", optionColorSpace, (uint8_t *)&mEEPROM.colorspace);
+    buttonMatrix[0] = new ButtonGroup(cont, group, "Colorspace", optionColorSpace, (uint8_t *)&gEEPROM->current.colorspace);
     setButtonMtxStyles(buttonMatrix[0]->buttons);
 
     //
-    buttonMatrix[1] = new ButtonGroup(cont, group, "Upscaling Interpolation", optionUpscaling, (uint8_t *)&mEEPROM.interpolation);
+    buttonMatrix[1] = new ButtonGroup(cont, group, "Upscaling Interpolation", optionUpscaling, (uint8_t *)&gEEPROM->current.interpolation);
     setButtonMtxStyles(buttonMatrix[1]->buttons);
 
     // Add line break between button options and button scenes
@@ -114,8 +107,20 @@ void AdvanceSettings::OnObjectEvent(lv_obj_t* obj, lv_event_t event)
     {
         uint32_t event_key = *(uint32_t *)lv_event_get_data();
 
-        if(event_key == LV_KEY_ESC)
+        if(event_key == LV_KEY_ESC) {
+            // Save EEPROM
+            gEEPROM->save();
+
+            // Return to previous scene
             load_scene = SCENE::ROOT;
+        }
+    }
+
+    if(event == LV_EVENT_VALUE_CHANGED) {
+        if(obj == buttonMatrix[0]->buttons)
+            gEEPROM->current.colorspace = (COLORSPACE)lv_btnmatrix_get_active_btn(obj);
+        if(obj == buttonMatrix[1]->buttons)
+            gEEPROM->current.interpolation = (INTERPOLATION)lv_btnmatrix_get_active_btn(obj);
     }
 
     if(event == LV_EVENT_PRESSED)

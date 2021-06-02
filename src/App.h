@@ -1,7 +1,10 @@
 #pragma once
 #include <stdint.h>
+#include "EEPROM.h"
 
 int main_app(void);
+
+extern EEPROM *gEEPROM;
 
 extern uint8_t load_scene;
 

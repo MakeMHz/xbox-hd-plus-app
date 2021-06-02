@@ -24,20 +24,19 @@ InterpolationSettings::InterpolationSettings()
     lv_cont_set_layout(cont, LV_LAYOUT_COLUMN_LEFT);
 
     //
-    uint8_t value = 1;
-    buttonMatrix[0] = new ButtonGroup(cont, group, "X Scale", optionScaler, &value);
+    buttonMatrix[0] = new ButtonGroup(cont, group, "X Scale", optionScaler, (uint8_t *)&gEEPROM->current.interpolation_x_scale);
     setButtonMtxStyles(buttonMatrix[0]->buttons);
 
     //
-    buttonMatrix[1] = new ButtonGroup(cont, group, "Y Scale", optionScaler, &value);
+    buttonMatrix[1] = new ButtonGroup(cont, group, "Y Scale", optionScaler, (uint8_t *)&gEEPROM->current.interpolation_y_scale);
     setButtonMtxStyles(buttonMatrix[1]->buttons);
 
     //
-    buttonMatrix[2] = new ButtonGroup(cont, group, "X Weight", optionWeight, &value);
+    buttonMatrix[2] = new ButtonGroup(cont, group, "X Weight", optionWeight,(uint8_t *)&gEEPROM->current.interpolation_x_weight);
     setButtonMtxStyles(buttonMatrix[2]->buttons);
 
     //
-    buttonMatrix[3] = new ButtonGroup(cont, group, "Y Weight", optionWeight, &value);
+    buttonMatrix[3] = new ButtonGroup(cont, group, "Y Weight", optionWeight, (uint8_t *)&gEEPROM->current.interpolation_y_weight);
     setButtonMtxStyles(buttonMatrix[3]->buttons);
 
     // Register a callbacks
@@ -64,11 +63,27 @@ void InterpolationSettings::OnObjectEvent(lv_obj_t* obj, lv_event_t event)
     // Preform warp check on event
     if(WarpObjectOnEvent(obj, event, group)) { return; }
 
+    if(event == LV_EVENT_VALUE_CHANGED) {
+        if(obj == buttonMatrix[0]->buttons)
+            gEEPROM->current.interpolation_x_scale = (INTERPOLATION_X_SCALE)lv_btnmatrix_get_active_btn(obj);
+        if(obj == buttonMatrix[1]->buttons)
+            gEEPROM->current.interpolation_y_scale = (INTERPOLATION_Y_SCALE)lv_btnmatrix_get_active_btn(obj);
+        if(obj == buttonMatrix[2]->buttons)
+            gEEPROM->current.interpolation_x_weight = (INTERPOLATION_X_WEIGHT)lv_btnmatrix_get_active_btn(obj);
+        if(obj == buttonMatrix[3]->buttons)
+            gEEPROM->current.interpolation_y_weight = (INTERPOLATION_Y_WEIGHT)lv_btnmatrix_get_active_btn(obj);
+    }
+
     if(event == LV_EVENT_KEY)
     {
         uint32_t event_key = *(uint32_t *)lv_event_get_data();
 
-        if(event_key == LV_KEY_ESC)
+        if(event_key == LV_KEY_ESC) {
+            // Save EEPROM
+            gEEPROM->save();
+
+            // Return to previous scene
             load_scene = SCENE::ADVANCED_SETTINGS;
+        }
     }
 }

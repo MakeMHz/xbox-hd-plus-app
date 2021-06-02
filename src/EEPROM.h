@@ -3,6 +3,8 @@
 #include <string.h>
 #include <memory>
 
+#define EEPROM_PATH "C:\\xboxhd\\eeprom.bin"
+
 enum class OUTPUT_RESOLUTION {
     ORIGINAL = 0,
     C480P,
@@ -54,7 +56,8 @@ enum class INTERPOLATION_Y_WEIGHT {
 };
 
 typedef struct EEPROM_T {
-    uint32_t firmware_version;
+    uint8_t firmware_version[4];
+    uint8_t software_version[4];
     uint32_t checksum;
     OUTPUT_RESOLUTION      output_resolution;
     OUTPUT_WIDESCREEN      widescreen;
@@ -71,11 +74,7 @@ class EEPROM {
     public:
         EEPROM();
         virtual ~EEPROM() { };
-
-        void set(EEPROM_T e);
-        EEPROM_T get();
-
-        EEPROM_T stored  = { 0 };
+        void save();
         EEPROM_T current = { 0 };
     private:
 };
