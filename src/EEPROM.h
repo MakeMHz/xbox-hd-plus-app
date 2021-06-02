@@ -13,10 +13,9 @@ enum class OUTPUT_RESOLUTION {
 };
 
 enum class OUTPUT_WIDESCREEN {
-    ORIGINAL = 0,
-    C480P,
-    C720P,
-    C1080I
+    AUTO = 0,
+    FORCE,
+    NEVER
 };
 
 enum class AUDIO_COMP {
