@@ -4,7 +4,6 @@
 #include <windows.h>
 #include <zlib.h>
 #include <semver.h>
-#include <nxdk/mount.h>
 #include <lvgl.h>
 
 #include "lvgl-extra/ButtonGroup.h"
@@ -22,9 +21,6 @@ static void StateTaskHandler(lv_task_t * task) {
 
 Update::Update()
 {
-    // Mount the C partition
-    nxMountDrive('C', "\\Device\\Harddisk0\\Partition2\\");
-
     //
     if(!network_init)
         init_networking();

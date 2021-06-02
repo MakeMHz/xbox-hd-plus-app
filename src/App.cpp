@@ -3,6 +3,7 @@
 #include <lv_sdl_drv_display.h>
 #include <lv_sdl_drv_input.h>
 #include <hal/video.h>
+#include <nxdk/mount.h>
 
 #include "App.h"
 #include "Assets.h"
@@ -36,6 +37,9 @@ Update *update;
 int main_app(void)
 {
     XVideoSetMode(width, height, LV_COLOR_DEPTH, REFRESH_DEFAULT);
+
+    // Mount the C partition
+    nxMountDrive('C', "\\Device\\Harddisk0\\Partition2\\");
 
     lv_init();
     lv_sdl_init_display("XboxHDMI", width, height);
