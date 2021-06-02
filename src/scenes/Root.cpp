@@ -2,6 +2,7 @@
 #include <string.h>
 #include <hal/xbox.h>
 #include <lvgl.h>
+#include <lv_sdl_drv_input.h>
 
 #include "lvgl-extra/ButtonGroup.h"
 #include "lvgl-extra/WarpObject.h"
@@ -93,5 +94,10 @@ void SceneRoot::OnObjectEvent(lv_obj_t* obj, lv_event_t event)
         if(obj == btnAbout) {
             load_scene = SCENE::CREDITS;
         }
+    }
+
+    // Exit app on B press
+    if(event == LV_EVENT_CANCEL) {
+        set_quit_event(SHUTDOWN);
     }
 }
