@@ -67,6 +67,7 @@ typedef struct EEPROM_T {
     INTERPOLATION_Y_SCALE  interpolation_y_scale;
     INTERPOLATION_X_WEIGHT interpolation_x_weight;
     INTERPOLATION_Y_WEIGHT interpolation_y_weight;
+    uint8_t PADDING[1024];
 } __attribute__((packed)) EEPROM_T;
 
 class EEPROM {
