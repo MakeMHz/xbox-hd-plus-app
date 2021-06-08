@@ -11,7 +11,7 @@ semver_t current_version = { 2, 0, 0 };
 semver_t target_firmware_version = { 2, 0, 0 };
 
 bool findKernelPatchVersion(uint8_t *version) {
-    char tag[] = "NPkv";
+    char tag[] = "HDMIkv";
     char *findStartAddress = ((char *)&AvGetSavedDataAddress) - 0x00002000;
 
     for(uint16_t offset = 0; offset < 0x00004000; offset++) {
