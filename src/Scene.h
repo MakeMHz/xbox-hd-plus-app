@@ -10,6 +10,7 @@ class Scene {
         virtual ~Scene() { };
 
         void DrawBackButton();
+        void DrawBackButton(const char *text);
         void setButtonMtxStyles(lv_obj_t * obj);
         void setButtonStyles(lv_obj_t * obj);
 

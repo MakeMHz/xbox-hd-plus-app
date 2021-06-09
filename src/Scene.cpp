@@ -37,12 +37,17 @@ Scene::Scene()
 
 void Scene::DrawBackButton()
 {
+    DrawBackButton("Back");
+}
+
+void Scene::DrawBackButton(const char *text)
+{
     back_button_image = lv_img_create(screen, NULL);
     lv_img_set_src(back_button_image, &Xbox_B2_32);
     lv_obj_align(back_button_image, cont, LV_ALIGN_IN_BOTTOM_RIGHT, -60, -16);
 
     back_button_label = lv_label_create(screen, NULL);
-    lv_label_set_text(back_button_label, "Back");
+    lv_label_set_text(back_button_label, text);
     lv_obj_align(back_button_label, back_button_image, LV_ALIGN_CENTER, 42, 0);
     lv_obj_set_width(back_button_label, 200);
 }

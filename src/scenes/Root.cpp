@@ -33,6 +33,9 @@ SceneRoot::SceneRoot()
     btnFirmware        = CreateSubSceneButton("Check for Update");
     btnAbout           = CreateSubSceneButton("About & Credits");
 
+    // Draw back button in default location
+    DrawBackButton("Exit");
+
     // Reset warp so that the newly focused object is set as current
     WarpObjectReset(group);
 }
