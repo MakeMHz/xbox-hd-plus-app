@@ -1,6 +1,7 @@
 #include <hal/xbox.h>
 #include <SDL.h>
 #include <windows.h>
+#include "EEPROM.h"
 #include "Loader.h"
 
 int main_loader(void)
@@ -23,10 +24,17 @@ int main_loader(void)
 
         if(SDL_GameControllerGetButton(pad, SDL_CONTROLLER_BUTTON_X)) {
             // Combo (X + A) Load configuration app
-            if(SDL_GameControllerGetButton(pad, SDL_CONTROLLER_BUTTON_A))
+            if(SDL_GameControllerGetButton(pad, SDL_CONTROLLER_BUTTON_A)) {
                 boot = BOOT_LOAD_APP;
+                break;
+            }
 
-            // TODO: Combo (X + Black) - Clear EEPROM
+            // Combo (X + Black) - Clear EEPROM
+            if(SDL_GameControllerGetButton(pad, SDL_CONTROLLER_BUTTON_RIGHTSHOULDER)) {
+                boot = BOOT_CLEAR_EEPROM;
+                break;
+            }
+
             // TODO: Combo (X + White) - Load pixel bus test
 
             // TODO: Combo (X + DOWN) - Force 'default video' output
@@ -40,6 +48,14 @@ int main_loader(void)
 
     if(boot == BOOT_LOAD_APP)
         XLaunchXBE("C:\\xboxhd\\default.xbe");
+
+    if(boot == BOOT_CLEAR_EEPROM) {
+        EEPROM *mEEPROM = new EEPROM();
+
+        mEEPROM->clear();
+        mEEPROM->save();
+        mEEPROM->upload();
+    }
 
     return 0;
 }

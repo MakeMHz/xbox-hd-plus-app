@@ -129,30 +129,17 @@ uint8_t firmware_version[3] = { 0 };
 lv_obj_t *label_firmware;
 void drawFirmwareVersion()
 {
-    ULONG smbus_read;
+    uint8_t firmware_version[3];
 
     label_firmware = lv_label_create(lv_scr_act(), NULL);
     lv_obj_set_pos(label_firmware, 30, 420);
 
     //
-    if(HalReadSMBusValue(I2C_HDMI_ADRESS, I2C_FIRMWARE_VERSION + 0, false, &smbus_read) != 0) {
-        lv_label_set_text(label_firmware, "XboxHD+ not detected!");
-    } else {
-        firmware_version[0] = (uint8_t)smbus_read;
-
-        HalReadSMBusValue(I2C_HDMI_ADRESS, I2C_FIRMWARE_VERSION + 1, false, &smbus_read);
-        firmware_version[1] = (uint8_t)smbus_read;
-
-        HalReadSMBusValue(I2C_HDMI_ADRESS, I2C_FIRMWARE_VERSION + 2, false, &smbus_read);
-        firmware_version[2] = (uint8_t)smbus_read;
-
-        // Firmware 1.0.0 will incorrectly report 0.0.0, so let's fix that.
-        if(firmware_version[0] == 0 && firmware_version[1] == 0 && firmware_version[2] == 0) {
-            firmware_version[0] = 1;
-        }
-
+    if(getFirmwareVersion(firmware_version)) {
         lv_label_set_text_fmt(label_firmware, "Firmware Version: %u.%u.%u",
             firmware_version[0], firmware_version[1], firmware_version[2]);
+    } else {
+        lv_label_set_text(label_firmware, "XboxHD+ not detected!");
     }
 }
 

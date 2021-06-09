@@ -2,6 +2,7 @@
 #include <string.h>
 #include <semver.h>
 #include <xboxkrnl/xboxkrnl.h>
+#include "System.h"
 
 // Version of this software
 semver_t current_version = { 2, 0, 0 };
@@ -25,4 +26,30 @@ bool findKernelPatchVersion(uint8_t *version) {
     }
 
     return false;
+}
+
+bool getFirmwareVersion(uint8_t *firmware_version) {
+    ULONG smbus_read;
+
+    // Check for XboxHDMI/HD+
+    if(HalReadSMBusValue(I2C_HDMI_ADDRESS, I2C_FIRMWARE_VERSION + 0, 0, &smbus_read) != 0) {
+        return false;
+    }
+
+    firmware_version[0] = (uint8_t)smbus_read;
+
+    HalReadSMBusValue(I2C_HDMI_ADDRESS, I2C_FIRMWARE_VERSION + 1, 0, &smbus_read);
+    firmware_version[1] = (uint8_t)smbus_read;
+
+    HalReadSMBusValue(I2C_HDMI_ADDRESS, I2C_FIRMWARE_VERSION + 2, 0, &smbus_read);
+    firmware_version[2] = (uint8_t)smbus_read;
+
+    // Firmware 1.0.0 will incorrectly report 0.0.0, so let's fix that.
+    if(firmware_version[0] == 0 && firmware_version[1] == 0 && firmware_version[2] == 0) {
+        firmware_version[0] = 1;
+        firmware_version[1] = 0;
+        firmware_version[2] = 0;
+    }
+
+    return true;
 }
