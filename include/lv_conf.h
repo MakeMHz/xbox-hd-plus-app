@@ -457,7 +457,7 @@ typedef void * lv_font_user_data_t;
  * LV_THEME_MATERIAL_FLAG_NO_TRANSITION: disable transitions (state change animations)
  * LV_THEME_MATERIAL_FLAG_NO_FOCUS: disable indication of focused state)
  * */
-#define LV_USE_THEME_MATERIAL    1
+#define LV_USE_THEME_MATERIAL_XBOX 1
 
 /* Mono-color theme for monochrome displays.
  * If LV_THEME_DEFAULT_COLOR_PRIMARY is LV_COLOR_BLACK the
@@ -467,7 +467,7 @@ typedef void * lv_font_user_data_t;
  #define LV_USE_THEME_MONO        1
 
 #define LV_THEME_DEFAULT_INCLUDE            <stdint.h>      /*Include a header for the init. function*/
-#define LV_THEME_DEFAULT_INIT               lv_theme_material_init
+#define LV_THEME_DEFAULT_INIT               lv_theme_material_xbox_init
 #define LV_THEME_DEFAULT_COLOR_PRIMARY      lv_color_hex(0x80ad5f)
 #define LV_THEME_DEFAULT_COLOR_SECONDARY    lv_color_hex(0x7ac867)
 #define LV_THEME_DEFAULT_FLAG               LV_THEME_MATERIAL_FLAG_DARK

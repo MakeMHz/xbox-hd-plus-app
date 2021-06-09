@@ -8,6 +8,7 @@ NXDK_NET = y
 SRCS += \
 	$(wildcard $(CURDIR)/src/*.cpp) \
 	$(wildcard $(CURDIR)/src/lvgl-extra/*.cpp) \
+	$(wildcard $(CURDIR)/src/lvgl-style/*.c) \
 	$(wildcard $(CURDIR)/src/scenes/*.cpp)
 # lwip
 SRCS += \
