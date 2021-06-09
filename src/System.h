@@ -1,5 +1,5 @@
 #pragma once
-#define I2C_HDMI_ADRESS 0x88
+#define I2C_HDMI_ADDRESS 0x88
 
 #define I2C_BOOT_MODE 0x20
 #define I2C_BOOT_FLAG 0x21
