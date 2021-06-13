@@ -1,4 +1,4 @@
-XBE_TITLE = lvgl-xbox
+XBE_TITLE = XboxHD+
 GEN_XISO = $(XBE_TITLE).iso
 NXDK_SDL = y
 NXDK_CXX = y
