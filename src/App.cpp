@@ -183,7 +183,7 @@ void checkFirmwareV2() {
     semver_t current_firmware_version = { firmware_version[0], firmware_version[1], firmware_version[2], NULL, NULL };
     semver_t target_firmware_version  = { 2, 0, 0, NULL, NULL };
 
-    if(semver_compare(current_version, target_firmware_version) == -1) {
+    if(semver_satisfies(current_firmware_version, target_firmware_version, "<")) {
         // Register input device
         lv_indev_t *sdl_indev = lv_indev_get_next(NULL);
         lv_group_t *group = lv_group_create();
@@ -254,7 +254,7 @@ void checkFirmwareLastest() {
     //
     free(firmware);
 
-    if(semver_compare(current_version, target_firmware_version) == -1) {
+    if(semver_compare(current_firmware_version, target_firmware_version) == -1) {
         // Register input device
         lv_indev_t *sdl_indev = lv_indev_get_next(NULL);
         lv_group_t *group = lv_group_create();
