@@ -36,8 +36,8 @@ AdvanceSettings::AdvanceSettings()
 
     // Draw our child scene buttons
     btnAdvanceInterpolation = CreateSubSceneButton("Advance Interpolation");
-    btnColospace            = CreateSubSceneButton("Color Correction");
-    btnOverscan             = CreateSubSceneButton("Overscan Correction");
+    //btnColospace            = CreateSubSceneButton("Color Correction");
+    //btnOverscan             = CreateSubSceneButton("Overscan Correction");
 
     // Register a callbacks
     lv_group_add_obj_warp(group, ButtonEventHandler, static_cast<lv_obj_user_data_t>(this), buttonMatrix[0]->buttons);

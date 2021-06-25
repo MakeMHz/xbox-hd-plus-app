@@ -27,11 +27,11 @@ SceneRoot::SceneRoot()
     lv_cont_set_layout(cont, LV_LAYOUT_COLUMN_LEFT);
 
     // Draw our child scene buttons
-    btnSelfTest        = CreateSubSceneButton("Self Test");
+    //btnSelfTest        = CreateSubSceneButton("Self Test");
     btnVideoSettings   = CreateSubSceneButton("Video Settings");
     btnAdvanceSettings = CreateSubSceneButton("Advance Settings");
     btnFirmware        = CreateSubSceneButton("Check for Update");
-    btnAbout           = CreateSubSceneButton("About & Credits");
+    //btnAbout           = CreateSubSceneButton("About & Credits");
 
     // Draw back button in default location
     DrawBackButton("Exit");
