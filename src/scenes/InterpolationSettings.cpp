@@ -65,13 +65,13 @@ void InterpolationSettings::OnObjectEvent(lv_obj_t* obj, lv_event_t event)
 
     if(event == LV_EVENT_VALUE_CHANGED) {
         if(obj == buttonMatrix[0]->buttons)
-            gEEPROM->current.interpolation_x_scale = (INTERPOLATION_X_SCALE)lv_btnmatrix_get_active_btn(obj);
+            gEEPROM->current.interpolation_x_scale = (uint8_t)lv_btnmatrix_get_active_btn(obj);
         if(obj == buttonMatrix[1]->buttons)
-            gEEPROM->current.interpolation_y_scale = (INTERPOLATION_Y_SCALE)lv_btnmatrix_get_active_btn(obj);
+            gEEPROM->current.interpolation_y_scale = (uint8_t)lv_btnmatrix_get_active_btn(obj);
         if(obj == buttonMatrix[2]->buttons)
-            gEEPROM->current.interpolation_x_weight = (INTERPOLATION_X_WEIGHT)lv_btnmatrix_get_active_btn(obj);
+            gEEPROM->current.interpolation_x_weight = (uint8_t)lv_btnmatrix_get_active_btn(obj);
         if(obj == buttonMatrix[3]->buttons)
-            gEEPROM->current.interpolation_y_weight = (INTERPOLATION_Y_WEIGHT)lv_btnmatrix_get_active_btn(obj);
+            gEEPROM->current.interpolation_y_weight = (uint8_t)lv_btnmatrix_get_active_btn(obj);
     }
 
     if(event == LV_EVENT_KEY)

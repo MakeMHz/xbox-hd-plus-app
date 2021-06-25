@@ -63,11 +63,11 @@ void VideoSettings::OnObjectEvent(lv_obj_t* obj, lv_event_t event)
 
     if(event == LV_EVENT_VALUE_CHANGED) {
         if(obj == buttonMatrix[0]->buttons)
-            gEEPROM->current.output_resolution = (OUTPUT_RESOLUTION)lv_btnmatrix_get_active_btn(obj);
+            gEEPROM->current.output_resolution = (uint8_t)lv_btnmatrix_get_active_btn(obj);
         if(obj == buttonMatrix[1]->buttons)
-            gEEPROM->current.widescreen = (OUTPUT_WIDESCREEN)lv_btnmatrix_get_active_btn(obj);
+            gEEPROM->current.widescreen = (uint8_t)lv_btnmatrix_get_active_btn(obj);
         if(obj == buttonMatrix[2]->buttons)
-            gEEPROM->current.audo_comp = (AUDIO_COMP)lv_btnmatrix_get_active_btn(obj);
+            gEEPROM->current.audo_comp = (uint8_t)lv_btnmatrix_get_active_btn(obj);
     }
 
     if(event == LV_EVENT_KEY)

@@ -118,9 +118,9 @@ void AdvanceSettings::OnObjectEvent(lv_obj_t* obj, lv_event_t event)
 
     if(event == LV_EVENT_VALUE_CHANGED) {
         if(obj == buttonMatrix[0]->buttons)
-            gEEPROM->current.colorspace = (COLORSPACE)lv_btnmatrix_get_active_btn(obj);
+            gEEPROM->current.colorspace = (uint8_t)lv_btnmatrix_get_active_btn(obj);
         if(obj == buttonMatrix[1]->buttons)
-            gEEPROM->current.interpolation = (INTERPOLATION)lv_btnmatrix_get_active_btn(obj);
+            gEEPROM->current.interpolation = (uint8_t)lv_btnmatrix_get_active_btn(obj);
     }
 
     if(event == LV_EVENT_PRESSED)

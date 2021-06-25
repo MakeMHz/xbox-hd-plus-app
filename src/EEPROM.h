@@ -55,19 +55,19 @@ enum class INTERPOLATION_Y_WEIGHT {
 };
 
 typedef struct EEPROM_T {
-    uint8_t firmware_version[4];
-    uint8_t software_version[4];
+    uint8_t  firmware_version[4];
+    uint8_t  software_version[4];
     uint32_t checksum;
-    OUTPUT_RESOLUTION      output_resolution;
-    OUTPUT_WIDESCREEN      widescreen;
-    AUDIO_COMP             audo_comp;
-    COLORSPACE             colorspace;
-    INTERPOLATION          interpolation;
-    INTERPOLATION_X_SCALE  interpolation_x_scale;
-    INTERPOLATION_Y_SCALE  interpolation_y_scale;
-    INTERPOLATION_X_WEIGHT interpolation_x_weight;
-    INTERPOLATION_Y_WEIGHT interpolation_y_weight;
-    uint8_t PADDING[1024];
+    uint8_t  output_resolution;
+    uint8_t  widescreen;
+    uint8_t  audo_comp;
+    uint8_t  colorspace;
+    uint8_t  interpolation;
+    uint8_t  interpolation_x_scale;
+    uint8_t  interpolation_y_scale;
+    uint8_t  interpolation_x_weight;
+    uint8_t  interpolation_y_weight;
+    uint8_t  PADDING[1024];
 } __attribute__((packed)) EEPROM_T;
 
 class EEPROM {
