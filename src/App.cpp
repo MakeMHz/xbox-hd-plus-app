@@ -3,6 +3,7 @@
 #include <lv_sdl_drv_display.h>
 #include <lv_sdl_drv_input.h>
 #include <hal/video.h>
+#include <hal/xbox.h>
 #include <nxdk/mount.h>
 
 #include "App.h"
@@ -56,6 +57,10 @@ int main_app(void)
     drawFirmwareVersion();
     drawSoftwareVersion();
     drawPatchVersion();
+
+    // Check if firmware needs to be updated
+    checkFirmwareV2();
+    checkFirmwareLastest();
 
     // TODO: Verify patch.bin is loaded
 
@@ -165,5 +170,116 @@ void drawPatchVersion()
             kernel_patch_version[0], kernel_patch_version[1], kernel_patch_version[2]);
     } else {
         lv_label_set_text(label_patch, "Kernel patch not detected!");
+    }
+}
+
+void checkFirmwareV2() {
+    static const char *btns[] = { "Update", "" };
+
+    uint8_t firmware_version[3];
+    if(!getFirmwareVersion(firmware_version))
+        return;
+
+    semver_t current_firmware_version = { firmware_version[0], firmware_version[1], firmware_version[2], NULL, NULL };
+    semver_t target_firmware_version  = { 2, 0, 0, NULL, NULL };
+
+    if(semver_compare(current_version, target_firmware_version) == -1) {
+        // Register input device
+        lv_indev_t *sdl_indev = lv_indev_get_next(NULL);
+        lv_group_t *group = lv_group_create();
+        if(sdl_indev != NULL)
+            lv_indev_set_group(sdl_indev, group);
+
+
+        lv_obj_t * mbox1 = lv_msgbox_create(lv_scr_act(), NULL);
+        lv_msgbox_set_text_fmt(mbox1,
+            "A firmware update is required to continue.\n(v%d.%d.%d to v%d.%d.%d)",
+            current_firmware_version.major, current_firmware_version.minor, current_firmware_version.patch,
+            target_firmware_version.major, target_firmware_version.minor, target_firmware_version.patch
+        );
+
+        lv_msgbox_add_btns(mbox1, btns);
+        lv_obj_set_width(mbox1, 400);
+        lv_group_add_obj(group, mbox1);
+        lv_obj_align(mbox1, NULL, LV_ALIGN_CENTER, 0, 0);
+
+        while(!get_quit_event()) {
+            if(lv_msgbox_get_active_btn(mbox1)) {
+                XLaunchXBE("C:\\xboxhd\\upgrade.xbe");
+            }
+
+            lv_task_handler();
+            Sleep(15);
+        }
+    }
+}
+
+void checkFirmwareLastest() {
+    static const char *btns[] = { "Update", "" };
+
+    uint8_t firmware_version[3];
+    if(!getFirmwareVersion(firmware_version))
+        return;
+
+    semver_t current_firmware_version = { firmware_version[0], firmware_version[1], firmware_version[2], NULL, NULL };
+    semver_t target_firmware_version  = { 0, 0, 0, NULL, NULL };
+
+    FILE *fp = fopen("C:\\xboxhd\\firmware.xbe", "rb");
+    uint8_t *firmware = NULL;
+    long fsize;
+
+    if(!fp)
+        return;
+
+    //
+    fseek(fp, 0, SEEK_END);
+    fsize = ftell(fp);
+    rewind(fp);
+
+    //
+    firmware = (uint8_t *)malloc(fsize + 1);
+    fread(firmware, 1, fsize, fp);
+    fclose(fp);
+
+    //
+    for(uint32_t offset = 0; offset < (fsize - 100); offset++) {
+        char tag[] = "FMv";
+
+        if(memcmp(tag, firmware + offset, sizeof(tag) - 1) == 0) {
+            target_firmware_version = { (firmware + offset)[3], (firmware + offset)[4], (firmware + offset)[5], NULL, NULL };
+            break;
+        }
+    }
+
+    //
+    free(firmware);
+
+    if(semver_compare(current_version, target_firmware_version) == -1) {
+        // Register input device
+        lv_indev_t *sdl_indev = lv_indev_get_next(NULL);
+        lv_group_t *group = lv_group_create();
+        if(sdl_indev != NULL)
+            lv_indev_set_group(sdl_indev, group);
+
+        lv_obj_t * mbox1 = lv_msgbox_create(lv_scr_act(), NULL);
+        lv_msgbox_set_text_fmt(mbox1,
+            "A firmware update is required to continue.\n(v%d.%d.%d to v%d.%d.%d)",
+            current_firmware_version.major, current_firmware_version.minor, current_firmware_version.patch,
+            target_firmware_version.major, target_firmware_version.minor, target_firmware_version.patch
+        );
+
+        lv_msgbox_add_btns(mbox1, btns);
+        lv_obj_set_width(mbox1, 400);
+        lv_group_add_obj(group, mbox1);
+        lv_obj_align(mbox1, NULL, LV_ALIGN_CENTER, 0, 0);
+
+        while(!get_quit_event()) {
+            if(lv_msgbox_get_active_btn(mbox1)) {
+                XLaunchXBE("C:\\xboxhd\\firmware.xbe");
+            }
+
+            lv_task_handler();
+            Sleep(15);
+        }
     }
 }

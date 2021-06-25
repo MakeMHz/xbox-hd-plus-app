@@ -14,3 +14,6 @@ extern uint8_t kernel_patch_version[3];
 void drawFirmwareVersion();
 void drawSoftwareVersion();
 void drawPatchVersion();
+
+void checkFirmwareV2();
+void checkFirmwareLastest();
