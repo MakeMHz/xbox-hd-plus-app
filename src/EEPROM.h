@@ -19,8 +19,8 @@ enum class OUTPUT_WIDESCREEN {
 };
 
 enum class AUDIO_COMP {
-    AUTO = 0,
-    COMPAT
+    COMPAT = 0,
+    AUTO
 };
 
 enum class COLORSPACE {
