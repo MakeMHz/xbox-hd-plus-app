@@ -8,8 +8,8 @@
 #include "App.h"
 #include "scenes/InterpolationSettings.h"
 
-static const char *optionScaler[] = { "Truncate", "Bilinear", "" };
-static const char *optionWeight[] = { "Truncate", "Round", "" };
+static const char *optionScaler[] = { "Bilinear", "Truncate", "" };
+static const char *optionWeight[] = { "Round", "Truncate", "" };
 
 static void ButtonEventHandler(lv_obj_t * obj, lv_event_t event) {
     InterpolationSettings* scene = static_cast<InterpolationSettings *>(obj->user_data);

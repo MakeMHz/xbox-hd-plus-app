@@ -9,7 +9,7 @@
 #include "scenes/AdvanceSettings.h"
 
 static const char *optionColorSpace[] = { "Auto", "YCBCR", "RGB", "" };
-static const char *optionUpscaling[]  = { "Truncate", "Bilinear", "" };
+static const char *optionUpscaling[]  = { "Bilinear", "Truncate", "" };
 
 static void ButtonEventHandler(lv_obj_t * obj, lv_event_t event) {
     AdvanceSettings* scene = static_cast<AdvanceSettings *>(obj->user_data);

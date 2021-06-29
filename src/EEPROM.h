@@ -30,28 +30,28 @@ enum class COLORSPACE {
 };
 
 enum class INTERPOLATION {
-    TRUNC = 0,
-    BILINEAR
+    BILINEAR = 0,
+    TRUNC
 };
 
 enum class INTERPOLATION_X_SCALE {
-    TRUNC = 0,
-    BILINEAR
+    BILINEAR = 0,
+    TRUNC
 };
 
 enum class INTERPOLATION_Y_SCALE {
-    TRUNC = 0,
-    BILINEAR
+    BILINEAR = 0,
+    TRUNC
 };
 
 enum class INTERPOLATION_X_WEIGHT {
-    TRUNC = 0,
-    BILINEAR
+    BILINEAR = 0,
+    TRUNC
 };
 
 enum class INTERPOLATION_Y_WEIGHT {
-    TRUNC = 0,
-    BILINEAR
+    BILINEAR = 0,
+    TRUNC
 };
 
 typedef struct EEPROM_T {
