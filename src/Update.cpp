@@ -21,9 +21,7 @@ static void StateTaskHandler(lv_task_t * task) {
 
 Update::Update()
 {
-    //
-    if(!network_init)
-        init_networking();
+
 }
 
 Update::~Update(void)
@@ -33,6 +31,10 @@ Update::~Update(void)
 
 void Update::check()
 {
+    //
+    if(!network_init)
+        init_networking();
+
     status_text = lv_msgbox_create(lv_scr_act(), NULL);
     lv_msgbox_set_text(status_text, "Loading config file");
 
