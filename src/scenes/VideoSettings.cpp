@@ -10,7 +10,7 @@
 
 static const char * optionResolution[] = { "Original", "480p", "\n", "720p", "1080i", "" };
 static const char * optionWidescreen[] = { "Auto", "Force", "Never", "" };
-static const char * optionAudio[]      = { "Auto", "Compatibility", "" };;
+static const char * optionAudio[]      = { "Compatibility", "Auto", "" };;
 
 static void ButtonEventHandler(lv_obj_t * obj, lv_event_t event) {
     VideoSettings* scene = static_cast<VideoSettings *>(obj->user_data);
