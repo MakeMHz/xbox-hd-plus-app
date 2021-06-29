@@ -81,5 +81,8 @@ bool EEPROM::upload() {
 
         // Switch to Page 0 (Video Timings)
         HalWriteSMBusValue(I2C_HDMI_ADDRESS, I2C_FIRMWARE_PAGE, 0, I2C_FIRMWARE_PAGE_TIMINGS);
+        return true;
     }
+
+    return false;
 }
