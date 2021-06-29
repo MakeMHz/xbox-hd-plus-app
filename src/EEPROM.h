@@ -45,12 +45,12 @@ enum class INTERPOLATION_Y_SCALE {
 };
 
 enum class INTERPOLATION_X_WEIGHT {
-    BILINEAR = 0,
+    ROUND = 0,
     TRUNC
 };
 
 enum class INTERPOLATION_Y_WEIGHT {
-    BILINEAR = 0,
+    ROUND = 0,
     TRUNC
 };
 
