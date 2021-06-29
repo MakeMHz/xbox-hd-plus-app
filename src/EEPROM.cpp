@@ -73,6 +73,7 @@ bool EEPROM::upload() {
 
     if(semver_satisfies(current_firmware_version, target_firmware_version, "=")) {
         // Switch to Page 1 (EEPROM)
+        KeEnterCriticalRegion();
         HalWriteSMBusValue(I2C_HDMI_ADDRESS, I2C_FIRMWARE_PAGE, 0, I2C_FIRMWARE_PAGE_EEPROM);
 
         for(DWORD index = 0; index < 256; index++) {
@@ -81,6 +82,8 @@ bool EEPROM::upload() {
 
         // Switch to Page 0 (Video Timings)
         HalWriteSMBusValue(I2C_HDMI_ADDRESS, I2C_FIRMWARE_PAGE, 0, I2C_FIRMWARE_PAGE_TIMINGS);
+        KeLeaveCriticalRegion();
+
         return true;
     }
 
