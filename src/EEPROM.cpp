@@ -69,10 +69,9 @@ bool EEPROM::upload() {
         return false;
 
     // Verify firmware version
-    if(current.firmware_version[0] == firmware_version[0] &&
-       current.firmware_version[1] == firmware_version[1] &&
-       current.firmware_version[2] == firmware_version[2])
-    {
+    semver_t current_firmware_version = { firmware_version[0], firmware_version[1], firmware_version[2], NULL, NULL };
+
+    if(semver_satisfies(current_firmware_version, target_firmware_version, "=")) {
         // Switch to Page 1 (EEPROM)
         HalWriteSMBusValue(I2C_HDMI_ADDRESS, I2C_FIRMWARE_PAGE, 0, I2C_FIRMWARE_PAGE_EEPROM);
 
