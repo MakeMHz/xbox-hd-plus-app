@@ -8,7 +8,11 @@ enum BOOT_OPTION {
     BOOT_FORCE_AUTO,
     BOOT_FORCE_480P,
     BOOT_FORCE_720P,
-    BOOT_FORCE_1080I
+    BOOT_FORCE_1080I,
+    BOOT_LOAD_CUT1,
+    BOOT_LOAD_CUT2,
+    BOOT_LOAD_CUT3,
+    BOOT_LOAD_CUT4
 };
 
 int main_loader(void);

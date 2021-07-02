@@ -41,6 +41,33 @@ int main_loader(void)
             // TODO: Combo (X + LEFT) - Force 420P output
             // TODO: Combo (X + UP) - Force 720P output
             // TODO: Combo (X + RIGHT) - Force 1080i output
+
+        }
+
+        if(SDL_GameControllerGetButton(pad, SDL_CONTROLLER_BUTTON_Y)) {
+            // Combo (Y + Dpad Up) Load app shortcut 1
+            if(SDL_GameControllerGetButton(pad, SDL_CONTROLLER_BUTTON_DPAD_UP)) {
+                boot = BOOT_LOAD_CUT1;
+                break;
+            }
+
+            // Combo (Y + Dpad Right) Load app shortcut 2
+            if(SDL_GameControllerGetButton(pad, SDL_CONTROLLER_BUTTON_DPAD_RIGHT)) {
+                boot = BOOT_LOAD_CUT2;
+                break;
+            }
+
+            // Combo (Y + Dpad Down) Load app shortcut 3
+            if(SDL_GameControllerGetButton(pad, SDL_CONTROLLER_BUTTON_DPAD_DOWN)) {
+                boot = BOOT_LOAD_CUT3;
+                break;
+            }
+            // Combo (Y + Dpad Left) Load app shortcut 4
+            if(SDL_GameControllerGetButton(pad, SDL_CONTROLLER_BUTTON_DPAD_LEFT)) {
+                boot = BOOT_LOAD_CUT4;
+                break;
+            }
+
         }
 
         Sleep(1);
@@ -56,6 +83,18 @@ int main_loader(void)
         mEEPROM->save();
         mEEPROM->upload();
     }
+
+    if(boot == BOOT_LOAD_CUT1)
+        XLaunchXBE("C:\\xboxhd\\shortcuts\\1.xbe");
+
+    if(boot == BOOT_LOAD_CUT2)
+        XLaunchXBE("C:\\xboxhd\\shortcuts\\2.xbe");
+
+    if(boot == BOOT_LOAD_CUT3)
+        XLaunchXBE("C:\\xboxhd\\shortcuts\\3.xbe");
+
+    if(boot == BOOT_LOAD_CUT4)
+        XLaunchXBE("C:\\xboxhd\\shortcuts\\4.xbe");
 
     return 0;
 }
