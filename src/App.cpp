@@ -58,6 +58,8 @@ int main_app(void)
     drawSoftwareVersion();
     drawPatchVersion();
 
+
+    checkPatchVersion();
     // Check if firmware needs to be updated
     checkFirmwareV2();
     checkFirmwareLastest();
@@ -173,6 +175,45 @@ void drawPatchVersion()
             lv_label_set_text(label_patch, "Kernel patch loader detected");
         else
             lv_label_set_text(label_patch, "Kernel patch not detected!");
+    }
+}
+
+void checkPatchVersion() {
+    static const char *btns[] = { "Reboot", "" };
+
+    if(kernel_patch_version[0] == 0)
+        return;
+
+    semver_t current_patch_version = { kernel_patch_version[0], kernel_patch_version[1], kernel_patch_version[2], NULL, NULL };
+    semver_t target_patch_version  = { 2, 0, 0, NULL, NULL };
+
+    if(semver_satisfies(current_patch_version, target_patch_version, "<")) {
+        // Register input device
+        lv_indev_t *sdl_indev = lv_indev_get_next(NULL);
+        lv_group_t *group = lv_group_create();
+        if(sdl_indev != NULL)
+            lv_indev_set_group(sdl_indev, group);
+
+
+        lv_obj_t * mbox1 = lv_msgbox_create(lv_scr_act(), NULL);
+        lv_msgbox_set_text_fmt(mbox1,
+            "Kernel patch version (v%d.%d.%d) incompatible.\nIt appears your currently running a none XboxHD+ patched BIOS.\nPlease verify that your BIOS is patched correctly.\n(If you have a XboxHDMI board then make sure to follow the upgrade guide!)",
+            current_patch_version.major, current_patch_version.minor, current_patch_version.patch
+        );
+
+        lv_msgbox_add_btns(mbox1, btns);
+        lv_obj_set_width(mbox1, 400);
+        lv_group_add_obj(group, mbox1);
+        lv_obj_align(mbox1, NULL, LV_ALIGN_CENTER, 0, 0);
+
+        while(!get_quit_event()) {
+            if(lv_msgbox_get_active_btn(mbox1)) {
+                XReboot();
+            }
+
+            lv_task_handler();
+            Sleep(15);
+        }
     }
 }
 
