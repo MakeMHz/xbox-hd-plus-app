@@ -58,7 +58,6 @@ int main_app(void)
     drawSoftwareVersion();
     drawPatchVersion();
 
-
     checkPatchVersion();
     // Check if firmware needs to be updated
     checkFirmwareV2();
