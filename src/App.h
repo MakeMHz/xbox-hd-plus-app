@@ -15,5 +15,6 @@ void drawFirmwareVersion();
 void drawSoftwareVersion();
 void drawPatchVersion();
 
+void checkPatchVersion();
 void checkFirmwareV2();
 void checkFirmwareLastest();
