@@ -28,6 +28,18 @@ bool findKernelPatchVersion(uint8_t *version) {
     return false;
 }
 
+bool findKernelPatchLoader() {
+    char tag[] = "kp.bin";
+    char *findStartAddress = ((char *)0x80030E00);
+
+    for(uint16_t offset = 0; offset < 0x00000100; offset++) {
+        if(memcmp(tag, findStartAddress + offset, sizeof(tag) - 1) == 0)
+            return true;
+    }
+
+    return false;
+}
+
 bool getFirmwareVersion(uint8_t *firmware_version) {
     ULONG smbus_read;
 
