@@ -169,7 +169,10 @@ void drawPatchVersion()
         lv_label_set_text_fmt(label_patch, "BIOS Patch Version: %u.%u.%u",
             kernel_patch_version[0], kernel_patch_version[1], kernel_patch_version[2]);
     } else {
-        lv_label_set_text(label_patch, "Kernel patch not detected!");
+        if(findKernelPatchLoader())
+            lv_label_set_text(label_patch, "Kernel patch loader detected");
+        else
+            lv_label_set_text(label_patch, "Kernel patch not detected!");
     }
 }
 
