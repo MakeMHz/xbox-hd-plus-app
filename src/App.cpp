@@ -22,6 +22,7 @@
 #include "scenes/OverscanCorrection.h"
 #include "scenes/Root.h"
 #include "scenes/SelfTest.h"
+#include "scenes/SystemSettings.h"
 #include "scenes/VideoSettings.h"
 
 #define printf(fmt, ...) debugPrint(fmt, __VA_ARGS__)
@@ -83,6 +84,10 @@ int main_app(void)
         switch(load_scene) {
             case SCENE::ROOT:
                 currentScene = new SceneRoot();
+                current_scene = load_scene;
+                break;
+            case SCENE::SYSTEM_SETTINGS:
+                currentScene = new SystemSettings();
                 current_scene = load_scene;
                 break;
             case SCENE::ADVANCED_SETTINGS:
