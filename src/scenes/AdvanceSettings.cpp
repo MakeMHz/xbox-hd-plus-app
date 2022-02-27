@@ -59,7 +59,7 @@ void AdvanceSettings::CreateLineBreak()
     static lv_style_t style_line;
     lv_style_init(&style_line);
     lv_style_set_line_width(&style_line, LV_STATE_DEFAULT, 2);
-    lv_style_set_line_color(&style_line, LV_STATE_DEFAULT, LV_COLOR_BLACK);
+    lv_style_set_line_color(&style_line, LV_STATE_DEFAULT, LV_COLOR_GRAY);
     lv_style_set_line_rounded(&style_line, LV_STATE_DEFAULT, true);
 
     // Create a line and apply the new style
