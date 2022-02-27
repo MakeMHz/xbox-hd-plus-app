@@ -29,6 +29,7 @@ class Scene {
 
 enum SCENE {
     ROOT,
+    SYSTEM_SETTINGS,
     ADVANCED_SETTINGS,
     INTERPOLATION_SETTINGS,
     SELF_TEST,

@@ -28,6 +28,7 @@ SceneRoot::SceneRoot()
 
     // Draw our child scene buttons
     //btnSelfTest        = CreateSubSceneButton("Self Test");
+    btnSystemSettings  = CreateSubSceneButton("System Settings");
     btnVideoSettings   = CreateSubSceneButton("Video Settings");
     btnAdvanceSettings = CreateSubSceneButton("Advance Settings");
     btnFirmware        = CreateSubSceneButton("Check for Update");
@@ -84,6 +85,9 @@ void SceneRoot::OnObjectEvent(lv_obj_t* obj, lv_event_t event)
     {
         if(obj == btnSelfTest) {
             load_scene = SCENE::SELF_TEST;
+        }
+        if(obj == btnSystemSettings) {
+            load_scene = SCENE::SYSTEM_SETTINGS;
         }
         if(obj == btnVideoSettings) {
             load_scene = SCENE::VIDEO_SETTINGS;
