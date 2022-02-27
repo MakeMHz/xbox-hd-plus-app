@@ -19,5 +19,6 @@ class SceneRoot : public Scene {
         lv_obj_t *btnVideoSettings;
         lv_obj_t *btnAdvanceSettings;
         lv_obj_t *btnFirmware;
+        lv_obj_t *btnUserManual;
         lv_obj_t *btnAbout;
 };

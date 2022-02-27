@@ -32,6 +32,7 @@ SceneRoot::SceneRoot()
     btnVideoSettings   = CreateSubSceneButton("Video Settings");
     btnAdvanceSettings = CreateSubSceneButton("Advance Settings");
     btnFirmware        = CreateSubSceneButton("Check for Update");
+    btnUserManual      = CreateSubSceneButton("User Manual");
     btnAbout           = CreateSubSceneButton("About & Credits");
 
     // Draw back button in default location
@@ -94,6 +95,9 @@ void SceneRoot::OnObjectEvent(lv_obj_t* obj, lv_event_t event)
         }
         if(obj == btnAdvanceSettings) {
             load_scene = SCENE::ADVANCED_SETTINGS;
+        }
+        if(obj == btnUserManual) {
+            load_scene = SCENE::USER_MANUAL;
         }
         if(obj == btnFirmware) {
             update->check();
