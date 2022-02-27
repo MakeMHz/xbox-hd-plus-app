@@ -39,7 +39,7 @@ static void ButtonEventHandler(lv_obj_t * obj, lv_event_t event)
 
 
 // TODO: Move into class
-uint32_t ContributorListCounter = rand() % ContributorsCount;
+static uint32_t ContributorListCounter = rand() % ContributorsCount;
 
 static void AnimationEventHandler(lv_obj_t *obj, lv_anim_value_t time) {
     // Fade text in and out
