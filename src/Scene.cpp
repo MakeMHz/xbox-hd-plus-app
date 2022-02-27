@@ -14,7 +14,7 @@ Scene::Scene()
 
     lv_obj_set_style_local_bg_opa(screen, LV_OBJMASK_PART_MAIN, LV_STATE_DEFAULT, LV_OPA_TRANSP);
     lv_obj_set_style_local_border_width(screen, LV_OBJMASK_PART_MAIN, LV_STATE_DEFAULT, 0);
-    lv_obj_set_style_local_outline_width(screen, 0, LV_STATE_DEFAULT, 1);
+    lv_obj_set_style_local_outline_width(screen, 0, LV_STATE_DEFAULT, 0);
 
     lv_obj_set_size(screen, lv_obj_get_width(parent_screen), lv_obj_get_height(parent_screen));
     lv_obj_set_pos(screen, 0, 0);
