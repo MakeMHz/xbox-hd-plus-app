@@ -23,6 +23,7 @@
 #include "scenes/Root.h"
 #include "scenes/SelfTest.h"
 #include "scenes/SystemSettings.h"
+#include "scenes/UserManual.h"
 #include "scenes/VideoSettings.h"
 
 #define printf(fmt, ...) debugPrint(fmt, __VA_ARGS__)
@@ -92,6 +93,10 @@ int main_app(void)
                 break;
             case SCENE::ADVANCED_SETTINGS:
                 currentScene = new AdvanceSettings();
+                current_scene = load_scene;
+                break;
+            case SCENE::USER_MANUAL:
+                currentScene = new UserManual();
                 current_scene = load_scene;
                 break;
             case SCENE::COLOR_CORRECTION:
