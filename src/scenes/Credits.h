@@ -11,5 +11,11 @@ class Credits : public Scene {
 
         void OnObjectEvent(lv_obj_t* obj, lv_event_t event);
     private:
-        lv_obj_t *label1;
+        lv_obj_t *labelHeader;
+        lv_obj_t *pageMain;
+        lv_obj_t *labelCredits;
+
+        // 'Thank You' objects
+        lv_anim_t a;
+        lv_obj_t *labelThankYou;
 };

@@ -7,6 +7,7 @@ NXDK_NET = y
 #Include my files
 SRCS += \
 	$(wildcard $(CURDIR)/src/*.cpp) \
+	$(wildcard $(CURDIR)/src/Generated/*.cpp) \
 	$(wildcard $(CURDIR)/src/lvgl-extra/*.cpp) \
 	$(wildcard $(CURDIR)/src/lvgl-style/*.c) \
 	$(wildcard $(CURDIR)/src/scenes/*.cpp)

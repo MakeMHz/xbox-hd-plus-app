@@ -6,3 +6,4 @@ loader/**
 .vscode/**
 *.iso
 *.exe
+src/Generated/**

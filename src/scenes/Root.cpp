@@ -32,7 +32,7 @@ SceneRoot::SceneRoot()
     btnVideoSettings   = CreateSubSceneButton("Video Settings");
     btnAdvanceSettings = CreateSubSceneButton("Advance Settings");
     btnFirmware        = CreateSubSceneButton("Check for Update");
-    //btnAbout           = CreateSubSceneButton("About & Credits");
+    btnAbout           = CreateSubSceneButton("About & Credits");
 
     // Draw back button in default location
     DrawBackButton("Exit");
