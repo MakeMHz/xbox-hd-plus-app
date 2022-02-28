@@ -1,6 +1,3 @@
-[submodule "3rdparty/lvgl-sdl"]
-	path = 3rdparty/lvgl-sdl
-	url = https://github.com/Ryzee119/lvgl-sdl.git
 [submodule "3rdparty/json"]
 	path = 3rdparty/json
 	url = https://github.com/nlohmann/json.git
@@ -10,3 +7,7 @@
 [submodule "3rdparty/semver.c"]
 	path = 3rdparty/semver.c
 	url = https://github.com/h2non/semver.c.git
+[submodule "3rdparty/lvgl-sdl"]
+	url = git@github.com:MakeMHz/lvgl-sdl.git
+	path = 3rdparty/lvgl-sdl
+    branch = xbox-hd-app
