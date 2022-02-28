@@ -108,6 +108,18 @@ SystemSettings::SystemSettings()
 
 SystemSettings::~SystemSettings(void)
 {
+    // Store values now since we can not trust lvgl's events to give us the correct states
+    xboxConfig.SetVideo480p(lv_btnmatrix_get_btn_ctrl(buttonMatrix[0]->buttons, 0, LV_BTNMATRIX_CTRL_CHECK_STATE));
+    xboxConfig.SetVideo720p(lv_btnmatrix_get_btn_ctrl(buttonMatrix[0]->buttons, 1, LV_BTNMATRIX_CTRL_CHECK_STATE));
+    xboxConfig.SetVideo1080i(lv_btnmatrix_get_btn_ctrl(buttonMatrix[0]->buttons, 2, LV_BTNMATRIX_CTRL_CHECK_STATE));
+
+    if(lv_btnmatrix_get_active_btn(buttonMatrix[1]->buttons) == 1) {
+        xboxConfig.SetVideoAspectRatio(XC_VIDEO_FLAGS_LETTERBOX);
+    } else if(lv_btnmatrix_get_active_btn(buttonMatrix[1]->buttons) == 2) {
+        xboxConfig.SetVideoAspectRatio(XC_VIDEO_FLAGS_WIDESCREEN);
+    } else
+        xboxConfig.SetVideoAspectRatio(0);
+
     // Save EEPROM
     xboxConfig.Save();
 
@@ -193,18 +205,5 @@ void SystemSettings::OnObjectEvent(lv_obj_t* obj, lv_event_t event)
     if(event == LV_EVENT_PRESSED) {
         if(obj == btnSystemAudioSettings)
             load_scene = SCENE::SYSTEM_AUDIO_SETTINGS;
-    }
-
-    if(event == LV_EVENT_VALUE_CHANGED) {
-        xboxConfig.SetVideo480p(lv_btnmatrix_get_btn_ctrl(buttonMatrix[0]->buttons, 0, LV_BTNMATRIX_CTRL_CHECK_STATE));
-        xboxConfig.SetVideo720p(lv_btnmatrix_get_btn_ctrl(buttonMatrix[0]->buttons, 1, LV_BTNMATRIX_CTRL_CHECK_STATE));
-        xboxConfig.SetVideo1080i(lv_btnmatrix_get_btn_ctrl(buttonMatrix[0]->buttons, 2, LV_BTNMATRIX_CTRL_CHECK_STATE));
-
-        if(lv_btnmatrix_get_active_btn(buttonMatrix[1]->buttons) == 1) {
-            xboxConfig.SetVideoAspectRatio(XC_VIDEO_FLAGS_LETTERBOX);
-        } else if(lv_btnmatrix_get_active_btn(buttonMatrix[1]->buttons) == 2) {
-            xboxConfig.SetVideoAspectRatio(XC_VIDEO_FLAGS_WIDESCREEN);
-        } else
-            xboxConfig.SetVideoAspectRatio(0);
     }
 }
