@@ -184,11 +184,16 @@ void SystemSettings::OnObjectEvent(lv_obj_t* obj, lv_event_t event)
     }
 
     // HACK: Escape now if the event was triggered after exit (lvgl event handler can trigger after destructor call)
-    if(load_scene == SCENE::ROOT)
+    if(load_scene != SCENE::SYSTEM_SETTINGS)
         return;
 
     if(event == LV_EVENT_FOCUSED)
         UpdateHelperText();
+
+    if(event == LV_EVENT_PRESSED) {
+        if(obj == btnSystemAudioSettings)
+            load_scene = SCENE::SYSTEM_AUDIO_SETTINGS;
+    }
 
     if(event == LV_EVENT_VALUE_CHANGED) {
         xboxConfig.SetVideo480p(lv_btnmatrix_get_btn_ctrl(buttonMatrix[0]->buttons, 0, LV_BTNMATRIX_CTRL_CHECK_STATE));
