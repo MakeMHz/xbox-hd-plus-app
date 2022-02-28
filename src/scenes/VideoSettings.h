@@ -11,5 +11,10 @@ class VideoSettings : public Scene {
 
         void OnObjectEvent(lv_obj_t* obj, lv_event_t event);
     private:
-        ButtonGroup *buttonMatrix[3];
+        ButtonGroup *buttonMatrix[2];
+
+        // Help panel objects
+        void UpdateHelperText();
+        lv_obj_t *contHelp;
+        lv_obj_t *contHelpLabel;
 };
