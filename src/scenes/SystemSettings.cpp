@@ -56,8 +56,6 @@ SystemSettings::SystemSettings()
     lv_obj_set_width(contHelpLabel, 300);
     lv_obj_align(contHelpLabel, NULL, LV_ALIGN_IN_TOP_MID, 0, 20);
 
-    //lv_label_set_text(contHelpLabel, helpAspectRatio);
-
     //
     buttonMatrix[0] = new ButtonGroup(cont, group, "Video Modes", optionResolution, NULL);
     lv_btnmatrix_set_one_check(buttonMatrix[0]->buttons, false);
@@ -77,9 +75,6 @@ SystemSettings::SystemSettings()
 
     // Draw back button in default location
     DrawBackButton();
-
-    // Reset warp so that the newly focused object is set as current
-    WarpObjectReset(group);
 
     // We have to set the buttons values manually
     // Video Modes
@@ -102,6 +97,9 @@ SystemSettings::SystemSettings()
 
     // Update helper text
     UpdateHelperText();
+
+    // Reset warp so that the newly focused object is set as current
+    WarpObjectReset(group);
 }
 
 SystemSettings::~SystemSettings(void)
