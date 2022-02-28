@@ -17,8 +17,8 @@ static const char * optionAudio[]      = { "Compatibility", "Auto", "" };;
 
 static const char helpVideoModes[] =
     "The video modes option controls what resolutions software on the Xbox are allowed to run at.\n\n"
-    "This option does not limit upscaling. (For example, software can still run at 1080i, if the "
-    "video mode option is enabled, and upscaling is set to 720p)\n\n"
+    "This option does not limit the output resolution. (For example, software can still run at 1080i, if the "
+    "'Video Mode' option is enabled for that resolution, and 'Target Resolution' is set to 720p)\n\n"
     "* This is the same settings from the Microsoft dashboard.";
 
 static const char helpAspectRatio[] =
