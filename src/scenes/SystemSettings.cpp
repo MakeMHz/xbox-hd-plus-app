@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <string.h>
 #include <lvgl.h>
-#include <xboxkrnl/xboxkrnl.h>
 #include <windows.h>
 
 #include "App.h"
@@ -16,6 +15,19 @@ static const char * optionResolution[] = { "480p", "720p", "1080i", "" };
 static const char * optionWidescreen[] = { "Normal", "Letterbox", "\n", "Widescreen", "" };
 static const char * optionAudio[]      = { "Compatibility", "Auto", "" };;
 
+static const char helpVideoModes[] =
+    "The video modes option controls what resolutions software on the Xbox are allowed to run at.\n\n"
+    "This option does not limit upscaling. (For example, software can still run at 1080i, if the "
+    "video mode option is enabled, and upscaling is set to 720p)\n\n"
+    "* This is the same settings from the Microsoft dashboard.";
+
+static const char helpAspectRatio[] =
+    "The aspect ratio is a system option that software can check to help determine what "
+    "video output mode to use. Some software may ignore this option all together.\n\n"
+    "The letterbox aspect ratio seems to be ignored by retail games and appears to be "
+    "only used in the official Xbox DVD playback software.\n\n"
+    "* This is the same settings from the Microsoft dashboard.";
+
 static void ButtonEventHandler(lv_obj_t * obj, lv_event_t event) {
     SystemSettings* scene = static_cast<SystemSettings *>(obj->user_data);
     scene->OnObjectEvent(obj, event);
@@ -28,6 +40,23 @@ SystemSettings::SystemSettings()
     lv_obj_set_pos(cont, 380, 20);
 
     lv_cont_set_layout(cont, LV_LAYOUT_COLUMN_LEFT);
+
+    // Create help text panel
+    contHelp = lv_cont_create(screen, NULL);
+
+    lv_obj_set_style_local_bg_opa(contHelp, LV_OBJMASK_PART_MAIN, LV_STATE_DEFAULT, LV_OPA_90);
+    lv_obj_set_style_local_border_width(contHelp, LV_OBJMASK_PART_MAIN, LV_STATE_DEFAULT, 0);
+
+    lv_obj_set_size(contHelp, 330, 340);
+    lv_obj_set_pos(contHelp, 20, 20);
+    lv_obj_set_hidden(contHelp, true);
+
+    contHelpLabel = lv_label_create(contHelp, NULL);
+    lv_label_set_long_mode(contHelpLabel, LV_LABEL_LONG_BREAK);
+    lv_obj_set_width(contHelpLabel, 300);
+    lv_obj_align(contHelpLabel, NULL, LV_ALIGN_IN_TOP_MID, 0, 20);
+
+    //lv_label_set_text(contHelpLabel, helpAspectRatio);
 
     //
     buttonMatrix[0] = new ButtonGroup(cont, group, "Video Modes", optionResolution, NULL);
@@ -72,6 +101,9 @@ SystemSettings::SystemSettings()
         lv_btnmatrix_set_btn_ctrl(buttonMatrix[1]->buttons, 2, LV_BTNMATRIX_CTRL_CHECK_STATE);
     else
         lv_btnmatrix_set_btn_ctrl(buttonMatrix[1]->buttons, 0, LV_BTNMATRIX_CTRL_CHECK_STATE);
+
+    // Update helper text
+    UpdateHelperText();
 }
 
 SystemSettings::~SystemSettings(void)
@@ -120,10 +152,27 @@ lv_obj_t *SystemSettings::CreateSubSceneButton(const char *text) {
     //
     lv_group_add_obj_warp(group, ButtonEventHandler, static_cast<lv_obj_user_data_t>(this), btn);
 
-    //lv_obj_set_event_cb(btn1, event_handler);
-
     return btn;
 }
+
+void SystemSettings::UpdateHelperText() {
+    // Santiy check
+    if(!group)
+        return;
+
+    lv_obj_t *focus = lv_group_get_focused(group);
+
+    DbgPrint("UpdateHelperText %s\n", contHelp);
+
+    if(focus == buttonMatrix[0]->buttons) {
+        lv_label_set_text(contHelpLabel, helpVideoModes);
+        lv_obj_set_hidden(contHelp, false);
+    } else if(focus == buttonMatrix[1]->buttons) {
+        lv_label_set_text(contHelpLabel, helpAspectRatio);
+        lv_obj_set_hidden(contHelp, false);
+    } else
+        lv_obj_set_hidden(contHelp, true);
+};
 
 void SystemSettings::OnObjectEvent(lv_obj_t* obj, lv_event_t event)
 {
@@ -136,8 +185,16 @@ void SystemSettings::OnObjectEvent(lv_obj_t* obj, lv_event_t event)
         if(event_key == LV_KEY_ESC) {
             // Return to previous scene
             load_scene = SCENE::ROOT;
+            return;
         }
     }
+
+    // HACK: Escape now if the event was triggered after exit (lvgl event handler can trigger after destructor call)
+    if(load_scene == SCENE::ROOT)
+        return;
+
+    if(event == LV_EVENT_FOCUSED)
+        UpdateHelperText();
 
     if(event == LV_EVENT_VALUE_CHANGED) {
         xboxConfig.SetVideo480p(lv_btnmatrix_get_btn_ctrl(buttonMatrix[0]->buttons, 0, LV_BTNMATRIX_CTRL_CHECK_STATE));

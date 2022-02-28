@@ -14,11 +14,15 @@ class SystemSettings : public Scene {
     private:
         void CreateLineBreak();
         lv_obj_t *CreateSubSceneButton(const char *text);
+        void UpdateHelperText();
 
         //
         lv_obj_t *btnSystemAudioSettings;
-
         ButtonGroup *buttonMatrix[8];
 
         XboxConfig xboxConfig;
+
+        // Help panel objects
+        lv_obj_t *contHelp;
+        lv_obj_t *contHelpLabel;
 };
