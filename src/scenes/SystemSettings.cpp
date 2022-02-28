@@ -156,13 +156,7 @@ lv_obj_t *SystemSettings::CreateSubSceneButton(const char *text) {
 }
 
 void SystemSettings::UpdateHelperText() {
-    // Santiy check
-    if(!group)
-        return;
-
     lv_obj_t *focus = lv_group_get_focused(group);
-
-    DbgPrint("UpdateHelperText %s\n", contHelp);
 
     if(focus == buttonMatrix[0]->buttons) {
         lv_label_set_text(contHelpLabel, helpVideoModes);
