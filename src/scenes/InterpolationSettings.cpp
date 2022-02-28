@@ -25,19 +25,15 @@ InterpolationSettings::InterpolationSettings()
 
     //
     buttonMatrix[0] = new ButtonGroup(cont, group, "X Scale", optionScaler, (uint8_t *)&gEEPROM->current.interpolation_x_scale);
-    setButtonMtxStyles(buttonMatrix[0]->buttons);
 
     //
     buttonMatrix[1] = new ButtonGroup(cont, group, "Y Scale", optionScaler, (uint8_t *)&gEEPROM->current.interpolation_y_scale);
-    setButtonMtxStyles(buttonMatrix[1]->buttons);
 
     //
     buttonMatrix[2] = new ButtonGroup(cont, group, "X Weight", optionWeight,(uint8_t *)&gEEPROM->current.interpolation_x_weight);
-    setButtonMtxStyles(buttonMatrix[2]->buttons);
 
     //
     buttonMatrix[3] = new ButtonGroup(cont, group, "Y Weight", optionWeight, (uint8_t *)&gEEPROM->current.interpolation_y_weight);
-    setButtonMtxStyles(buttonMatrix[3]->buttons);
 
     // Register a callbacks
     lv_group_add_obj_warp(group, ButtonEventHandler, static_cast<lv_obj_user_data_t>(this), buttonMatrix[0]->buttons);

@@ -27,16 +27,13 @@ VideoSettings::VideoSettings()
 
     //
     buttonMatrix[0] = new ButtonGroup(cont, group, "Output Resolution", optionResolution, (uint8_t *)&gEEPROM->current.output_resolution);
-    setButtonMtxStyles(buttonMatrix[0]->buttons);
     lv_obj_set_size(buttonMatrix[0]->buttons, lv_obj_get_width(cont) - 28, 100);
 
     //
     buttonMatrix[1] = new ButtonGroup(cont, group, "4:3 Widescreen", optionWidescreen, (uint8_t *)&gEEPROM->current.widescreen);
-    setButtonMtxStyles(buttonMatrix[1]->buttons);
 
     //
     buttonMatrix[2] = new ButtonGroup(cont, group, "Audio", optionAudio, (uint8_t *)&gEEPROM->current.audo_comp);
-    setButtonMtxStyles(buttonMatrix[2]->buttons);
 
     // Register a callbacks
     lv_group_add_obj_warp(group, ButtonEventHandler, static_cast<lv_obj_user_data_t>(this), buttonMatrix[0]->buttons);

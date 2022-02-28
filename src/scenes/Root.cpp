@@ -53,9 +53,6 @@ lv_obj_t *SceneRoot::CreateSubSceneButton(const char *text) {
     lv_obj_t *label = lv_label_create(btn, NULL);
     lv_label_set_text(label, text);
 
-    // TODO: Move to proper styles
-    setButtonStyles(btn);
-
     //
     lv_group_add_obj_warp(group, ButtonEventHandler, static_cast<lv_obj_user_data_t>(this), btn);
 

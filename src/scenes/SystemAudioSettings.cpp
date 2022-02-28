@@ -51,15 +51,12 @@ SystemAudioSettings::SystemAudioSettings()
 
     //
     buttonMatrix[0] = new ButtonGroup(cont, group, "Audio Mode", optionAudioMode, NULL);
-    setButtonMtxStyles(buttonMatrix[0]->buttons);
 
     //
     buttonMatrix[1] = new ButtonGroup(cont, group, "Dolby Digital (AC3)", optionDolby, NULL);
-    setButtonMtxStyles(buttonMatrix[1]->buttons);
 
     //
     buttonMatrix[2] = new ButtonGroup(cont, group, "DTS", optionDTS, NULL);
-    setButtonMtxStyles(buttonMatrix[2]->buttons);
 
     // Register a callbacks
     lv_group_add_obj_warp(group, ButtonEventHandler, static_cast<lv_obj_user_data_t>(this), buttonMatrix[0]->buttons);
@@ -144,9 +141,6 @@ lv_obj_t *SystemAudioSettings::CreateSubSceneButton(const char *text) {
     // TODO: Possible memory leak?
     lv_obj_t *label = lv_label_create(btn, NULL);
     lv_label_set_text(label, text);
-
-    // TODO: Move to proper styles
-    setButtonStyles(btn);
 
     //
     lv_group_add_obj_warp(group, ButtonEventHandler, static_cast<lv_obj_user_data_t>(this), btn);
