@@ -270,6 +270,7 @@ static void basic_init(void)
     lv_style_set_bg_color(&styles->btn, LV_STATE_DISABLED, COLOR_BTN);
     lv_style_set_bg_color(&styles->btn, LV_STATE_DISABLED | LV_STATE_CHECKED, COLOR_BTN_DIS);
     lv_style_set_border_color(&styles->btn, LV_STATE_DEFAULT, COLOR_BTN_BORDER);
+    lv_style_set_border_color(&styles->btn, LV_STATE_FOCUSED, lv_color_hex(0xFFFFFF));
     lv_style_set_border_color(&styles->btn, LV_STATE_PRESSED, COLOR_BTN_BORDER_PR);
     lv_style_set_border_color(&styles->btn, LV_STATE_DISABLED, COLOR_BTN_BORDER_INA);
     lv_style_set_border_width(&styles->btn, LV_STATE_DEFAULT, 0);
@@ -639,6 +640,12 @@ static void btnmatrix_init(void)
 {
 #if LV_USE_BTNMATRIX
     lv_style_reset(&styles->matrix_bg);
+    lv_style_set_border_width(&styles->matrix_bg, LV_STATE_DEFAULT, 0);
+    lv_style_set_border_color(&styles->matrix_bg, LV_STATE_FOCUSED, lv_color_hex(0xFFFFFF));
+    lv_style_set_bg_opa(&styles->matrix_bg, LV_STATE_DEFAULT, LV_OPA_TRANSP);
+    lv_style_set_margin_all(&styles->matrix_bg, LV_STATE_DEFAULT, 0);
+    lv_style_set_pad_all(&styles->matrix_bg, LV_STATE_DEFAULT, 0);
+    lv_style_set_radius(&styles->matrix_bg, LV_STATE_DEFAULT, 10);
 #endif
 }
 
