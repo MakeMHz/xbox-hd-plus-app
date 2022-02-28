@@ -22,6 +22,7 @@
 #include "scenes/OverscanCorrection.h"
 #include "scenes/Root.h"
 #include "scenes/SelfTest.h"
+#include "scenes/SystemAudioSettings.h"
 #include "scenes/SystemSettings.h"
 #include "scenes/UserManual.h"
 #include "scenes/VideoSettings.h"
@@ -89,6 +90,10 @@ int main_app(void)
                 break;
             case SCENE::SYSTEM_SETTINGS:
                 currentScene = new SystemSettings();
+                current_scene = load_scene;
+                break;
+            case SCENE::SYSTEM_AUDIO_SETTINGS:
+                currentScene = new SystemAudioSettings();
                 current_scene = load_scene;
                 break;
             case SCENE::ADVANCED_SETTINGS:

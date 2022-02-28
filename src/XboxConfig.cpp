@@ -6,6 +6,7 @@
 XboxConfig::XboxConfig() {
     ULONG ResultLength;
     ExQueryNonVolatileSetting(XC_VIDEO_FLAGS, &VideoFlagsType, &VideoFlags, sizeof(VideoFlags), &ResultLength);
+    ExQueryNonVolatileSetting(XC_AUDIO, &AudioFlagsType, &AudioFlags, sizeof(AudioFlags), &ResultLength);
 }
 
 void XboxConfig::SetVideo480p(bool enable) {
@@ -24,7 +25,20 @@ void XboxConfig::SetVideoAspectRatio(ULONG flag) {
     VideoFlags = (VideoFlags & ~(XC_VIDEO_FLAGS_WIDESCREEN | XC_VIDEO_FLAGS_LETTERBOX)) + flag;
 }
 
+void XboxConfig::SetAudioMode(ULONG flag) {
+    AudioFlags = (AudioFlags & ~(XC_AUDIO_FLAGS_STEREO | XC_AUDIO_FLAGS_MONO | XC_AUDIO_FLAGS_SURROUND)) + flag;
+}
+
+void XboxConfig::SetAudioAC3(bool enable) {
+    AudioFlags = (AudioFlags & ~XC_AUDIO_FLAGS_ENABLE_AC3) + (enable ? XC_AUDIO_FLAGS_ENABLE_AC3 : 0);
+}
+
+void XboxConfig::SetAudioDTS(bool enable) {
+    AudioFlags = (AudioFlags & ~XC_AUDIO_FLAGS_ENABLE_DTS) + (enable ? XC_AUDIO_FLAGS_ENABLE_DTS : 0);
+}
+
 void XboxConfig::Save() {
     ULONG ResultLength;
     ExSaveNonVolatileSetting(XC_VIDEO_FLAGS, VideoFlagsType, &VideoFlags, sizeof(VideoFlags));
+    ExSaveNonVolatileSetting(XC_AUDIO, AudioFlagsType, &AudioFlags, sizeof(AudioFlags));
 }
