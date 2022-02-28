@@ -169,6 +169,10 @@ typedef struct {
     lv_style_t ta_cursor, ta_placeholder;
 #endif
 
+#if LV_USE_BTNMATRIX
+    lv_style_t matrix_bg;
+#endif
+
 } theme_styles_t;
 
 /**********************
@@ -202,13 +206,13 @@ static void basic_init(void)
     lv_style_set_value_font(&styles->scr, LV_STATE_DEFAULT, theme.font_normal);
 
     lv_style_reset(&styles->bg);
-    lv_style_set_radius(&styles->bg, LV_STATE_DEFAULT, LV_DPX(8));
+    lv_style_set_radius(&styles->bg, LV_STATE_DEFAULT, LV_DPX(6));
     lv_style_set_bg_opa(&styles->bg, LV_STATE_DEFAULT, LV_OPA_COVER);
     lv_style_set_bg_color(&styles->bg, LV_STATE_DEFAULT, COLOR_BG);
     lv_style_set_border_color(&styles->bg, LV_STATE_DEFAULT, COLOR_BG_BORDER);
-    if((theme.flags & LV_THEME_MATERIAL_FLAG_NO_FOCUS) == 0)lv_style_set_border_color(&styles->bg, LV_STATE_FOCUSED,
-                                                                                          theme.color_primary);
+    lv_style_set_border_color(&styles->bg, LV_STATE_FOCUSED, lv_color_hex(0xFFFFFF));
     lv_style_set_border_color(&styles->bg, LV_STATE_EDITED, theme.color_secondary);
+    lv_style_set_border_color(&styles->bg, LV_STATE_FOCUSED, lv_color_hex(0xFFFFFF));
     lv_style_set_border_width(&styles->bg, LV_STATE_DEFAULT, BORDER_WIDTH);
     lv_style_set_border_post(&styles->bg, LV_STATE_DEFAULT, true);
     lv_style_set_text_color(&styles->bg, LV_STATE_DEFAULT, COLOR_BG_TEXT);
@@ -239,11 +243,9 @@ static void basic_init(void)
     lv_style_set_bg_color(&styles->bg_click, LV_STATE_CHECKED, COLOR_BG_CHK);
     lv_style_set_bg_color(&styles->bg_click, LV_STATE_PRESSED | LV_STATE_CHECKED, COLOR_BG_PR_CHK);
     lv_style_set_bg_color(&styles->bg_click, LV_STATE_DISABLED, COLOR_BG_DIS);
-    lv_style_set_bg_color(&styles->bg_click, LV_STATE_FOCUSED, COLOR_BG_DIS);
     lv_style_set_border_width(&styles->bg_click, LV_STATE_CHECKED, 0);
     lv_style_set_border_width(&styles->bg_click, LV_STATE_FOCUSED, BORDER_WIDTH);
-    lv_style_set_border_color(&styles->bg_click, LV_STATE_FOCUSED | LV_STATE_PRESSED, lv_color_darken(theme.color_primary,
-                                                                                                      LV_OPA_20));
+    lv_style_set_border_color(&styles->bg_click, LV_STATE_FOCUSED, lv_color_hex(0xFFFFFF));
     lv_style_set_border_color(&styles->bg_click, LV_STATE_PRESSED, COLOR_BG_BORDER_PR);
     lv_style_set_border_color(&styles->bg_click, LV_STATE_CHECKED, COLOR_BG_BORDER_CHK);
     lv_style_set_border_color(&styles->bg_click, LV_STATE_PRESSED | LV_STATE_CHECKED, COLOR_BG_BORDER_CHK_PR);
@@ -259,7 +261,7 @@ static void basic_init(void)
     lv_style_set_transition_prop_5(&styles->bg_click, LV_STATE_DEFAULT, LV_STYLE_BG_COLOR);
 
     lv_style_reset(&styles->btn);
-    lv_style_set_radius(&styles->btn, LV_STATE_DEFAULT, LV_RADIUS_CIRCLE);
+    lv_style_set_radius(&styles->btn, LV_STATE_DEFAULT, 6);
     lv_style_set_bg_opa(&styles->btn, LV_STATE_DEFAULT, LV_OPA_COVER);
     lv_style_set_bg_color(&styles->btn, LV_STATE_DEFAULT, COLOR_BTN);
     lv_style_set_bg_color(&styles->btn, LV_STATE_PRESSED, COLOR_BTN_PR);
@@ -270,7 +272,8 @@ static void basic_init(void)
     lv_style_set_border_color(&styles->btn, LV_STATE_DEFAULT, COLOR_BTN_BORDER);
     lv_style_set_border_color(&styles->btn, LV_STATE_PRESSED, COLOR_BTN_BORDER_PR);
     lv_style_set_border_color(&styles->btn, LV_STATE_DISABLED, COLOR_BTN_BORDER_INA);
-    lv_style_set_border_width(&styles->btn, LV_STATE_DEFAULT, BORDER_WIDTH);
+    lv_style_set_border_width(&styles->btn, LV_STATE_DEFAULT, 0);
+    lv_style_set_border_width(&styles->btn, LV_STATE_FOCUSED, BORDER_WIDTH);
     lv_style_set_border_opa(&styles->btn, LV_STATE_CHECKED, LV_OPA_TRANSP);
 
     lv_style_set_text_color(&styles->btn, LV_STATE_DEFAULT, IS_LIGHT ? lv_color_hex(0x31404f) : lv_color_hex(0xffffff));
@@ -293,14 +296,9 @@ static void basic_init(void)
 
     lv_style_set_pad_left(&styles->btn, LV_STATE_DEFAULT, LV_DPX(40));
     lv_style_set_pad_right(&styles->btn, LV_STATE_DEFAULT, LV_DPX(40));
-    lv_style_set_pad_top(&styles->btn, LV_STATE_DEFAULT, LV_DPX(15));
-    lv_style_set_pad_bottom(&styles->btn, LV_STATE_DEFAULT, LV_DPX(15));
-    lv_style_set_pad_inner(&styles->btn, LV_STATE_DEFAULT, LV_DPX(20));
-    lv_style_set_outline_width(&styles->btn, LV_STATE_DEFAULT, OUTLINE_WIDTH);
-    lv_style_set_outline_opa(&styles->btn, LV_STATE_DEFAULT, LV_OPA_0);
-    lv_style_set_outline_opa(&styles->btn, LV_STATE_FOCUSED, LV_OPA_50);
-    lv_style_set_outline_color(&styles->btn, LV_STATE_DEFAULT, theme.color_primary);
-    lv_style_set_outline_color(&styles->btn, LV_STATE_EDITED, theme.color_secondary);
+    lv_style_set_pad_top(&styles->btn, LV_STATE_DEFAULT, LV_DPX(14));
+    lv_style_set_pad_bottom(&styles->btn, LV_STATE_DEFAULT, LV_DPX(14));
+    lv_style_set_pad_inner(&styles->btn, LV_STATE_DEFAULT, LV_DPX(2));
     lv_style_set_transition_time(&styles->btn, LV_STATE_DEFAULT, TRANSITION_TIME);
     lv_style_set_transition_prop_4(&styles->btn, LV_STATE_DEFAULT, LV_STYLE_BORDER_OPA);
     lv_style_set_transition_prop_5(&styles->btn, LV_STATE_DEFAULT, LV_STYLE_BG_COLOR);
@@ -639,6 +637,9 @@ static void checkbox_init(void)
 
 static void btnmatrix_init(void)
 {
+#if LV_USE_BTNMATRIX
+    lv_style_reset(&styles->matrix_bg);
+#endif
 }
 
 static void keyboard_init(void)
@@ -742,15 +743,6 @@ static void list_init(void)
     lv_style_set_image_recolor(&styles->list_btn, LV_STATE_DEFAULT, COLOR_BG_TEXT);
     lv_style_set_image_recolor(&styles->list_btn, LV_STATE_CHECKED, COLOR_BG_TEXT_CHK);
     lv_style_set_image_recolor(&styles->list_btn, LV_STATE_DISABLED, COLOR_BG_TEXT_DIS);
-
-    lv_style_set_border_side(&styles->list_btn, LV_STATE_DEFAULT, LV_BORDER_SIDE_BOTTOM);
-    lv_style_set_border_color(&styles->list_btn, LV_STATE_DEFAULT, COLOR_BG_BORDER);
-    lv_style_set_border_color(&styles->list_btn, LV_STATE_FOCUSED, theme.color_primary);
-    lv_style_set_border_width(&styles->list_btn, LV_STATE_DEFAULT, 1);
-
-    lv_style_set_outline_color(&styles->list_btn, LV_STATE_FOCUSED, theme.color_secondary);
-    lv_style_set_outline_width(&styles->list_btn, LV_STATE_FOCUSED, OUTLINE_WIDTH);
-    lv_style_set_outline_pad(&styles->list_btn, LV_STATE_FOCUSED, -BORDER_WIDTH);
 
     lv_style_set_pad_left(&styles->list_btn, LV_STATE_DEFAULT, PAD_DEF);
     lv_style_set_pad_right(&styles->list_btn, LV_STATE_DEFAULT, PAD_DEF);
@@ -989,7 +981,7 @@ static void theme_apply(lv_theme_t * th, lv_obj_t * obj, lv_theme_style_t name)
         case LV_THEME_BTNMATRIX:
             list = lv_obj_get_style_list(obj, LV_BTNMATRIX_PART_BG);
             _lv_style_list_add_style(list, &styles->bg);
-            _lv_style_list_add_style(list, &styles->pad_small);
+            _lv_style_list_add_style(list, &styles->matrix_bg);
 
             list = lv_obj_get_style_list(obj, LV_BTNMATRIX_PART_BTN);
             _lv_style_list_add_style(list, &styles->bg);

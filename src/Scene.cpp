@@ -51,16 +51,3 @@ void Scene::DrawBackButton(const char *text)
     lv_obj_align(back_button_label, back_button_image, LV_ALIGN_CENTER, 42, 0);
     lv_obj_set_width(back_button_label, 200);
 }
-
-void Scene::setButtonMtxStyles(lv_obj_t * obj) {
-    lv_obj_set_style_local_border_width(obj, LV_OBJMASK_PART_MAIN, LV_STATE_DEFAULT, 0);
-    lv_obj_set_style_local_bg_opa(obj, LV_OBJMASK_PART_MAIN, LV_STATE_DEFAULT, LV_OPA_TRANSP);
-    lv_obj_set_style_local_margin_all(obj, LV_OBJMASK_PART_MAIN, LV_STATE_DEFAULT, 0);
-    lv_obj_set_style_local_pad_all(obj, LV_OBJMASK_PART_MAIN, LV_STATE_DEFAULT, 0);
-    lv_obj_set_style_local_radius(obj, LV_OBJMASK_PART_MAIN, LV_STATE_DEFAULT, 10);
-}
-
-void Scene::setButtonStyles(lv_obj_t * obj) {
-    lv_obj_set_style_local_border_width(obj, LV_OBJMASK_PART_MAIN, LV_STATE_DEFAULT, 0);
-    lv_obj_set_style_local_radius(obj, LV_OBJMASK_PART_MAIN, LV_STATE_DEFAULT, 6);
-}

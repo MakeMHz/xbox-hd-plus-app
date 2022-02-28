@@ -61,11 +61,9 @@ SystemSettings::SystemSettings()
     //
     buttonMatrix[0] = new ButtonGroup(cont, group, "Video Modes", optionResolution, NULL);
     lv_btnmatrix_set_one_check(buttonMatrix[0]->buttons, false);
-    setButtonMtxStyles(buttonMatrix[0]->buttons);
 
     //
     buttonMatrix[1] = new ButtonGroup(cont, group, "Aspect Ratio", optionWidescreen, NULL);
-    setButtonMtxStyles(buttonMatrix[1]->buttons);
     lv_obj_set_size(buttonMatrix[1]->buttons, lv_obj_get_width(cont) - 28, 100);
 
     // Add line break between button options and button scenes
@@ -157,9 +155,6 @@ lv_obj_t *SystemSettings::CreateSubSceneButton(const char *text) {
     // TODO: Possible memory leak?
     lv_obj_t *label = lv_label_create(btn, NULL);
     lv_label_set_text(label, text);
-
-    // TODO: Move to proper styles
-    setButtonStyles(btn);
 
     //
     lv_group_add_obj_warp(group, ButtonEventHandler, static_cast<lv_obj_user_data_t>(this), btn);

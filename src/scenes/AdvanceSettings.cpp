@@ -25,11 +25,9 @@ AdvanceSettings::AdvanceSettings()
 
     //
     buttonMatrix[0] = new ButtonGroup(cont, group, "Colorspace", optionColorSpace, (uint8_t *)&gEEPROM->current.colorspace);
-    setButtonMtxStyles(buttonMatrix[0]->buttons);
 
     //
     buttonMatrix[1] = new ButtonGroup(cont, group, "Upscaling Interpolation", optionUpscaling, (uint8_t *)&gEEPROM->current.interpolation);
-    setButtonMtxStyles(buttonMatrix[1]->buttons);
 
     // Add line break between button options and button scenes
     CreateLineBreak();
@@ -80,9 +78,6 @@ lv_obj_t *AdvanceSettings::CreateSubSceneButton(const char *text) {
     // TODO: Possible memory leak?
     lv_obj_t *label = lv_label_create(btn, NULL);
     lv_label_set_text(label, text);
-
-    // TODO: Move to proper styles
-    setButtonStyles(btn);
 
     //
     lv_group_add_obj_warp(group, ButtonEventHandler, static_cast<lv_obj_user_data_t>(this), btn);
