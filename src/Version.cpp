@@ -5,11 +5,11 @@
 #include "System.h"
 
 // Version of this software
-semver_t current_version = { 2, 0, 6 };
+semver_t current_version = { 2, 1, 0 };
 
 // The HD+ firmware version that this copy of the software supports.
 // Used before executing commands on the MCU and for the 'EEPROM'
-semver_t target_firmware_version = { 2, 0, 5 };
+semver_t target_firmware_version = { 2, 1, 0 };
 
 bool findKernelPatchVersion(uint8_t *version) {
     char tag[] = "HDMIkv";
