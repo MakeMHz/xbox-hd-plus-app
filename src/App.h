@@ -18,3 +18,5 @@ void drawPatchVersion();
 void checkPatchVersion();
 void checkFirmwareV2();
 void checkFirmwareLastest();
+
+void checkInstallDir();
