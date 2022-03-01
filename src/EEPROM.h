@@ -60,7 +60,6 @@ typedef struct EEPROM_T {
     uint32_t checksum;
     uint8_t  output_resolution;
     uint8_t  widescreen;
-    uint8_t  audo_comp;
     uint8_t  colorspace;
     uint8_t  interpolation;
     uint8_t  interpolation_x_scale;
