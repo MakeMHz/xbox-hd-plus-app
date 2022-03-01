@@ -75,9 +75,8 @@ void InterpolationSettings::OnObjectEvent(lv_obj_t* obj, lv_event_t event)
         uint32_t event_key = *(uint32_t *)lv_event_get_data();
 
         if(event_key == LV_KEY_ESC) {
-            // Save and upload EEPROM
+            // Save EEPROM
             gEEPROM->save();
-            gEEPROM->upload();
 
             // Return to previous scene
             load_scene = SCENE::ADVANCED_SETTINGS;

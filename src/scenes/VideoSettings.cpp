@@ -74,9 +74,8 @@ VideoSettings::~VideoSettings(void)
     gEEPROM->current.output_resolution = (uint8_t)lv_btnmatrix_get_active_btn(buttonMatrix[0]->buttons);
     gEEPROM->current.widescreen = (uint8_t)lv_btnmatrix_get_active_btn(buttonMatrix[1]->buttons);
 
-    // Save and upload EEPROM
+    // Save EEPROM
     gEEPROM->save();
-    gEEPROM->upload();
 
     // TODO: Clean up all of the other objects.
     lv_obj_del(screen);
