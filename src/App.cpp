@@ -61,6 +61,7 @@ int main_app(void)
 
     //
     checkInstallDir();
+    checkInstallDirPatch();
 
     drawFirmwareVersion();
     drawSoftwareVersion();
@@ -354,4 +355,11 @@ void checkInstallDir() {
 
     if(!strcmp(launchPath, allowedPath) == 0)
         DisplayFatalError("ERROR: The XboxHD app must be installed in\nC:\\xboxhd");
+}
+
+void checkInstallDirPatch() {
+    FILE *file = fopen("D:\\kp.bin", "r");
+    if(!file)
+        DisplayFatalError("ERROR: XboxHD+ installation corrupt.\n(Missing File: kp.bin)\n\nPlease verify/reinstall the XboxHD+ files.");
+    fclose(file);
 }
