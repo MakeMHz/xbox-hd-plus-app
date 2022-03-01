@@ -148,6 +148,9 @@ int main_app(void)
     lv_sdl_deinit_display();
     lv_deinit();
 
+    // Reboot Xbox so kpatch has a chance to reload
+    HalReturnToFirmware(HalRebootRoutine);
+
     return 0;
 }
 
