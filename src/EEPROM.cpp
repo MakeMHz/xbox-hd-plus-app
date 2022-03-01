@@ -61,31 +61,3 @@ void EEPROM::save() {
     file.write((char *)&current, sizeof(EEPROM_T));
     file.close();
 }
-
-bool EEPROM::upload() {
-    uint8_t firmware_version[3];
-
-    if(!getFirmwareVersion(firmware_version))
-        return false;
-
-    // Verify firmware version
-    semver_t current_firmware_version = { firmware_version[0], firmware_version[1], firmware_version[2], NULL, NULL };
-
-    if(semver_satisfies(current_firmware_version, target_firmware_version, "==")) {
-        // Switch to Page 1 (EEPROM)
-        KeEnterCriticalRegion();
-        HalWriteSMBusValue(I2C_HDMI_ADDRESS, I2C_FIRMWARE_PAGE, 0, I2C_FIRMWARE_PAGE_EEPROM);
-
-        for(DWORD index = 0; index < 256; index++) {
-            HalWriteSMBusValue(I2C_HDMI_PAGE_ADDRESS, (BYTE)index, 0, ((char *)&current)[index]);
-        }
-
-        // Switch to Page 0 (Video Timings)
-        HalWriteSMBusValue(I2C_HDMI_ADDRESS, I2C_FIRMWARE_PAGE, 0, I2C_FIRMWARE_PAGE_TIMINGS);
-        KeLeaveCriticalRegion();
-
-        return true;
-    }
-
-    return false;
-}

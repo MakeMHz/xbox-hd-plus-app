@@ -75,7 +75,6 @@ class EEPROM {
         virtual ~EEPROM() { };
         void clear();
         void save();
-        bool upload();
         EEPROM_T current = { 0 };
     private:
 };

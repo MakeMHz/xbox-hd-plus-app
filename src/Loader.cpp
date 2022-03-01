@@ -54,7 +54,6 @@ int main_loader(void)
 
         mEEPROM->clear();
         mEEPROM->save();
-        mEEPROM->upload();
     }
 
     return 0;
