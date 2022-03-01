@@ -5,6 +5,7 @@
 #include <hal/video.h>
 #include <hal/xbox.h>
 #include <nxdk/mount.h>
+#include <nxdk/path.h>
 
 #include "App.h"
 #include "Assets.h"
@@ -56,6 +57,9 @@ int main_app(void)
     lv_img_set_src(wp, &background_left);
     lv_obj_set_pos(wp, 0, 0);
     lv_obj_set_width(wp, LV_HOR_RES);
+
+    //
+    checkInstallDir();
 
     drawFirmwareVersion();
     drawSoftwareVersion();
@@ -339,5 +343,40 @@ void checkFirmwareLastest() {
             lv_task_handler();
             Sleep(15);
         }
+    }
+}
+
+void checkInstallDir()
+{
+    char allowedPath[] = "\\Device\\Harddisk0\\Partition2\\xboxhd\\default.xbe";
+    char launchPath[MAX_PATH];
+    nxGetCurrentXbeNtPath(launchPath);
+
+    if(strcmp(launchPath, allowedPath) == 0)
+        return;
+
+    static const char *btns[] = { "Reboot", "" };
+
+    // Register input device
+    lv_indev_t *sdl_indev = lv_indev_get_next(NULL);
+    lv_group_t *group = lv_group_create();
+    if(sdl_indev != NULL)
+        lv_indev_set_group(sdl_indev, group);
+
+    lv_obj_t *mbox1 = lv_msgbox_create(lv_scr_act(), NULL);
+    lv_msgbox_set_text_fmt(mbox1, "ERROR: The XboxHD app must be installed in\nC:\\xboxhd");
+
+    lv_msgbox_add_btns(mbox1, btns);
+    lv_obj_set_width(mbox1, 400);
+    lv_group_add_obj(group, mbox1);
+    lv_obj_align(mbox1, NULL, LV_ALIGN_CENTER, 0, 0);
+
+    while(!get_quit_event()) {
+        if(lv_msgbox_get_active_btn(mbox1)) {
+            HalReturnToFirmware(HalRebootRoutine);
+        }
+
+        lv_task_handler();
+        Sleep(15);
     }
 }
