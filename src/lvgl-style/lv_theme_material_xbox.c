@@ -670,8 +670,7 @@ static void msgbox_init(void)
 {
 #if LV_USE_MSGBOX
     lv_style_reset(&styles->mbox_bg);
-    lv_style_set_shadow_width(&styles->mbox_bg, LV_STATE_DEFAULT, LV_DPX(50));
-    lv_style_set_shadow_color(&styles->mbox_bg, LV_STATE_DEFAULT, IS_LIGHT ? LV_COLOR_SILVER : lv_color_hex3(0x999));
+    lv_style_set_border_color(&styles->mbox_bg, LV_STATE_FOCUSED, theme.color_primary);
 
 #endif
 }
