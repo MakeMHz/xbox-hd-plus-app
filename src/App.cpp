@@ -59,7 +59,8 @@ int main_app(void)
     lv_obj_set_pos(wp, 0, 0);
     lv_obj_set_width(wp, LV_HOR_RES);
 
-    //
+    // Verify that we launched from C://xboxhd//default.xbe
+    // TODO: If it's from the DVD drive then prompt to install? Or at least show an warning/error.
     checkInstallDir();
     checkInstallDirPatch();
 
@@ -68,14 +69,12 @@ int main_app(void)
     drawPatchVersion();
 
     checkPatchVersion();
+
     // Check if firmware needs to be updated
     checkFirmwareV2();
     checkFirmwareLastest();
 
     // TODO: Verify patch.bin is loaded
-
-    // TODO: Verify that we launched from C://xboxhd//default.xbe
-    // If it's from the DVD drive then prompt to install? Or at least show an warning/error.
 
     //
     gEEPROM = new EEPROM();
