@@ -20,3 +20,4 @@ void checkFirmwareV2();
 void checkFirmwareLastest();
 
 void checkInstallDir();
+void checkInstallDirPatch();
