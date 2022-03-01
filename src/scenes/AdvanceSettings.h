@@ -16,12 +16,11 @@ class AdvanceSettings : public Scene {
         lv_obj_t *CreateSubSceneButton(const char *text);
 
         //
-        ButtonGroup *buttonMatrix[4];
+        ButtonGroup *buttonMatrix[2];
 
         //
         lv_obj_t *btnAdvanceInterpolation;
-        lv_obj_t *btnColospace;
-        lv_obj_t *btnOverscan;
+        lv_obj_t *btnLoadOptimizedSettings;
 
         //
         EEPROM_T mEEPROM;

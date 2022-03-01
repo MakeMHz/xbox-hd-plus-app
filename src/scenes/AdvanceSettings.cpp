@@ -8,7 +8,7 @@
 #include "App.h"
 #include "scenes/AdvanceSettings.h"
 
-static const char *optionColorSpace[] = { "Auto", "YCBCR", "RGB", "" };
+static const char *optionColorSpace[] = { "YCBCR", "RGB", "" };
 static const char *optionUpscaling[]  = { "Bilinear", "Truncate", "" };
 
 static void ButtonEventHandler(lv_obj_t * obj, lv_event_t event) {
@@ -24,18 +24,14 @@ AdvanceSettings::AdvanceSettings()
     lv_cont_set_layout(cont, LV_LAYOUT_COLUMN_LEFT);
 
     //
-    buttonMatrix[0] = new ButtonGroup(cont, group, "Colorspace", optionColorSpace, (uint8_t *)&gEEPROM->current.colorspace);
-
-    //
+    buttonMatrix[0] = new ButtonGroup(cont, group, "HDMI Colorspace", optionColorSpace, (uint8_t *)&gEEPROM->current.colorspace);
     buttonMatrix[1] = new ButtonGroup(cont, group, "Upscaling Interpolation", optionUpscaling, (uint8_t *)&gEEPROM->current.interpolation);
 
     // Add line break between button options and button scenes
     CreateLineBreak();
 
     // Draw our child scene buttons
-    btnAdvanceInterpolation = CreateSubSceneButton("Advance Interpolation");
-    //btnColospace            = CreateSubSceneButton("Color Correction");
-    //btnOverscan             = CreateSubSceneButton("Overscan Correction");
+    btnAdvanceInterpolation  = CreateSubSceneButton("Advance Interpolation");
 
     // Register a callbacks
     lv_group_add_obj_warp(group, ButtonEventHandler, static_cast<lv_obj_user_data_t>(this), buttonMatrix[0]->buttons);
@@ -89,6 +85,13 @@ lv_obj_t *AdvanceSettings::CreateSubSceneButton(const char *text) {
 
 AdvanceSettings::~AdvanceSettings(void)
 {
+    gEEPROM->current.colorspace    = (uint8_t)lv_btnmatrix_get_active_btn(buttonMatrix[0]->buttons);
+    gEEPROM->current.interpolation = (uint8_t)lv_btnmatrix_get_active_btn(buttonMatrix[1]->buttons);
+
+    // Save and upload EEPROM
+    gEEPROM->save();
+    gEEPROM->upload();
+
     // TODO: Clean up all of the other objects.
     lv_obj_del(screen);
 }
@@ -112,20 +115,12 @@ void AdvanceSettings::OnObjectEvent(lv_obj_t* obj, lv_event_t event)
         }
     }
 
-    if(event == LV_EVENT_VALUE_CHANGED) {
-        if(obj == buttonMatrix[0]->buttons)
-            gEEPROM->current.colorspace = (uint8_t)lv_btnmatrix_get_active_btn(obj);
-        if(obj == buttonMatrix[1]->buttons)
-            gEEPROM->current.interpolation = (uint8_t)lv_btnmatrix_get_active_btn(obj);
-    }
+    // HACK: Escape now if the event was triggered after exit (lvgl event handler can trigger after destructor call)
+    if(load_scene != SCENE::ADVANCED_SETTINGS)
+        return;
 
-    if(event == LV_EVENT_PRESSED)
-    {
+    if(event == LV_EVENT_PRESSED) {
         if(obj == btnAdvanceInterpolation)
             load_scene = SCENE::INTERPOLATION_SETTINGS;
-        if(obj == btnColospace)
-            load_scene = SCENE::COLOR_CORRECTION;
-        if(obj == btnOverscan)
-            load_scene = SCENE::OVERSCAN_CORRECTION;
     }
 }
