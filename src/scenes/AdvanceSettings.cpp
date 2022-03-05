@@ -10,6 +10,7 @@
 
 static const char *optionColorSpace[] = { "YCBCR", "RGB", "" };
 static const char *optionUpscaling[]  = { "Bilinear", "Truncate", "" };
+static const char *optionAutoBlank[]  = { "Disabled", "Enabled", "" };
 
 static void ButtonEventHandler(lv_obj_t * obj, lv_event_t event) {
     AdvanceSettings* scene = static_cast<AdvanceSettings *>(obj->user_data);
@@ -26,6 +27,7 @@ AdvanceSettings::AdvanceSettings()
     //
     buttonMatrix[0] = new ButtonGroup(cont, group, "HDMI Colorspace", optionColorSpace, (uint8_t *)&gEEPROM->current.colorspace);
     buttonMatrix[1] = new ButtonGroup(cont, group, "Upscaling Interpolation", optionUpscaling, (uint8_t *)&gEEPROM->current.interpolation);
+    buttonMatrix[2] = new ButtonGroup(cont, group, "Auto Video Blanking", optionAutoBlank, (uint8_t *)&gEEPROM->current.auto_video_blank);
 
     // Add line break between button options and button scenes
     CreateLineBreak();
@@ -36,6 +38,7 @@ AdvanceSettings::AdvanceSettings()
     // Register a callbacks
     lv_group_add_obj_warp(group, ButtonEventHandler, static_cast<lv_obj_user_data_t>(this), buttonMatrix[0]->buttons);
     lv_group_add_obj_warp(group, ButtonEventHandler, static_cast<lv_obj_user_data_t>(this), buttonMatrix[1]->buttons);
+    lv_group_add_obj_warp(group, ButtonEventHandler, static_cast<lv_obj_user_data_t>(this), buttonMatrix[2]->buttons);
 
     // Draw back button in default location
     DrawBackButton();
@@ -83,8 +86,9 @@ lv_obj_t *AdvanceSettings::CreateSubSceneButton(const char *text) {
 
 AdvanceSettings::~AdvanceSettings(void)
 {
-    gEEPROM->current.colorspace    = (uint8_t)lv_btnmatrix_get_active_btn(buttonMatrix[0]->buttons);
-    gEEPROM->current.interpolation = (uint8_t)lv_btnmatrix_get_active_btn(buttonMatrix[1]->buttons);
+    gEEPROM->current.colorspace       = (uint8_t)lv_btnmatrix_get_active_btn(buttonMatrix[0]->buttons);
+    gEEPROM->current.interpolation    = (uint8_t)lv_btnmatrix_get_active_btn(buttonMatrix[1]->buttons);
+    gEEPROM->current.auto_video_blank = (uint8_t)lv_btnmatrix_get_active_btn(buttonMatrix[2]->buttons);
 
     // Save EEPROM
     gEEPROM->save();

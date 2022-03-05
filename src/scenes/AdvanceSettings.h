@@ -16,7 +16,7 @@ class AdvanceSettings : public Scene {
         lv_obj_t *CreateSubSceneButton(const char *text);
 
         //
-        ButtonGroup *buttonMatrix[2];
+        ButtonGroup *buttonMatrix[3];
 
         //
         lv_obj_t *btnAdvanceInterpolation;
