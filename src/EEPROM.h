@@ -6,10 +6,8 @@
 #define EEPROM_PATH "C:\\xboxhd\\eeprom.bin"
 
 enum class OUTPUT_RESOLUTION {
-    ORIGINAL = 0,
-    C480P,
-    C720P,
-    C1080I
+    C480P = 0,
+    C720P
 };
 
 enum class OUTPUT_WIDESCREEN {
