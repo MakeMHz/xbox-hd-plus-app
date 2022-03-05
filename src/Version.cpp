@@ -44,10 +44,11 @@ bool getFirmwareVersion(uint8_t *firmware_version) {
     ULONG smbus_read;
 
     // Check for XboxHDMI/HD+
-    if(HalReadSMBusValue(I2C_HDMI_ADDRESS, I2C_FIRMWARE_VERSION + 0, 0, &smbus_read) != 0) {
+    if(HalReadSMBusValue(I2C_HDMI_PAGE_ADDRESS, 0, 0, &smbus_read) != 0) {
         return false;
     }
 
+    HalReadSMBusValue(I2C_HDMI_ADDRESS, I2C_FIRMWARE_VERSION + 0, 0, &smbus_read);
     firmware_version[0] = (uint8_t)smbus_read;
 
     HalReadSMBusValue(I2C_HDMI_ADDRESS, I2C_FIRMWARE_VERSION + 1, 0, &smbus_read);
