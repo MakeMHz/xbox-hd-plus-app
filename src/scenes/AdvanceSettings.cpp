@@ -78,8 +78,6 @@ lv_obj_t *AdvanceSettings::CreateSubSceneButton(const char *text) {
     //
     lv_group_add_obj_warp(group, ButtonEventHandler, static_cast<lv_obj_user_data_t>(this), btn);
 
-    //lv_obj_set_event_cb(btn1, event_handler);
-
     return btn;
 }
 
