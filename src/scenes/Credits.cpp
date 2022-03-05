@@ -42,6 +42,14 @@ static void ButtonEventHandler(lv_obj_t * obj, lv_event_t event)
 static uint32_t ContributorListCounter = rand() % ContributorsCount;
 
 static void AnimationEventHandler(lv_obj_t *obj, lv_anim_value_t time) {
+    // HACK: lv_anim_set_ready_cb() broke during an lvgl, so we're doing the text update here instead.
+    if(time < 3) {
+        // Generate a new string
+        ContributorListCounter++; // Start from a random index
+        lv_obj_set_style_local_text_opa(obj, LV_OBJMASK_PART_MAIN, LV_STATE_DEFAULT, 0);
+        lv_label_set_text_fmt(obj, "Thank You!\n%s", Contributors[ContributorListCounter % ContributorsCount]);
+    }
+
     // Fade text in and out
     if(time < 256)
         lv_obj_set_style_local_text_opa(obj, LV_OBJMASK_PART_MAIN, LV_STATE_DEFAULT, time);
@@ -87,7 +95,6 @@ Credits::Credits()
     // Set up 'Thank You' animation
     lv_anim_init(&a);
     lv_anim_set_exec_cb(&a, (lv_anim_exec_xcb_t) AnimationEventHandler);
-    lv_anim_set_start_cb(&a, (lv_anim_ready_cb_t) AnimationReadyEventHandler);
 
     lv_anim_set_var(&a, labelThankYou);
     lv_anim_set_time(&a, 4000);
