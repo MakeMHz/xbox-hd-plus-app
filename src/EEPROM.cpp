@@ -51,6 +51,9 @@ void EEPROM::clear() {
     current.firmware_version[0] = (target_firmware_version.major & 0xFF);
     current.firmware_version[1] = (target_firmware_version.minor & 0xFF);
     current.firmware_version[2] = (target_firmware_version.patch & 0xFF);
+
+    // Enable 'Auto Video Blanking' by default
+    current.auto_video_blank = 1;
 }
 
 void EEPROM::save() {
