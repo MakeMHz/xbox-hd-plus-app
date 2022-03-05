@@ -19,14 +19,14 @@ static const char helpVideoModes[] =
     "The video modes option controls what resolutions software on the Xbox are allowed to run at.\n\n"
     "This option does not limit the output resolution. (For example, software can still run at 1080i, if the "
     "'Video Mode' option is enabled for that resolution, and 'Target Resolution' is set to 720p)\n\n"
-    "* This is the same settings from the Microsoft dashboard.";
+    "* These are the same settings from the Microsoft dashboard.";
 
 static const char helpAspectRatio[] =
     "The aspect ratio is a system option that software can check to help determine what "
     "video output mode to use. Some software may ignore this option all together.\n\n"
     "The letterbox aspect ratio seems to be ignored by retail games and appears to be "
     "only used in the official Xbox DVD playback software.\n\n"
-    "* This is the same settings from the Microsoft dashboard.";
+    "* These are the same settings from the Microsoft dashboard.";
 
 static void ButtonEventHandler(lv_obj_t * obj, lv_event_t event) {
     SystemSettings* scene = static_cast<SystemSettings *>(obj->user_data);
