@@ -12,6 +12,11 @@ static const char *optionColorSpace[] = { "YCBCR", "RGB", "" };
 static const char *optionUpscaling[]  = { "Bilinear", "Truncate", "" };
 static const char *optionAutoBlank[]  = { "Disabled", "Enabled", "" };
 
+static const char helpAutoBlank[] =
+    "This option controls if video output should automatically be blanked, blacked out, "
+    "when a software title calls AV_OPTION_BLANK_SCREEN and during kernel calls to AvSetDisplayMode().\n\n"
+    "This option should be safe to leave on and is left for debugging/exploration purposes.";
+
 static void ButtonEventHandler(lv_obj_t * obj, lv_event_t event) {
     AdvanceSettings* scene = static_cast<AdvanceSettings *>(obj->user_data);
     scene->OnObjectEvent(obj, event);
@@ -23,6 +28,21 @@ AdvanceSettings::AdvanceSettings()
     lv_obj_set_size(cont, 320, 420);
     lv_obj_set_pos(cont, 380, 20);
     lv_cont_set_layout(cont, LV_LAYOUT_COLUMN_LEFT);
+
+    // Create help text panel
+    contHelp = lv_cont_create(screen, NULL);
+
+    lv_obj_set_style_local_bg_opa(contHelp, LV_OBJMASK_PART_MAIN, LV_STATE_DEFAULT, LV_OPA_90);
+    lv_obj_set_style_local_border_width(contHelp, LV_OBJMASK_PART_MAIN, LV_STATE_DEFAULT, 0);
+
+    lv_obj_set_size(contHelp, 330, 340);
+    lv_obj_set_pos(contHelp, 20, 20);
+    lv_obj_set_hidden(contHelp, true);
+
+    contHelpLabel = lv_label_create(contHelp, NULL);
+    lv_label_set_long_mode(contHelpLabel, LV_LABEL_LONG_BREAK);
+    lv_obj_set_width(contHelpLabel, 300);
+    lv_obj_align(contHelpLabel, NULL, LV_ALIGN_IN_TOP_MID, 0, 20);
 
     //
     buttonMatrix[0] = new ButtonGroup(cont, group, "HDMI Colorspace", optionColorSpace, (uint8_t *)&gEEPROM->current.colorspace);
@@ -42,6 +62,9 @@ AdvanceSettings::AdvanceSettings()
 
     // Draw back button in default location
     DrawBackButton();
+
+    // Update helper text
+    UpdateHelperText();
 
     // Reset warp so that the newly focused object is set as current
     WarpObjectReset(group);
@@ -97,6 +120,15 @@ AdvanceSettings::~AdvanceSettings(void)
     lv_obj_del(screen);
 }
 
+void AdvanceSettings::UpdateHelperText() {
+    lv_obj_t *focus = lv_group_get_focused(group);
+
+    if(focus == buttonMatrix[2]->buttons) {
+        lv_label_set_text(contHelpLabel, helpAutoBlank);
+        lv_obj_set_hidden(contHelp, false);
+    }
+};
+
 void AdvanceSettings::OnObjectEvent(lv_obj_t* obj, lv_event_t event)
 {
     // Preform warp check on event
@@ -115,6 +147,9 @@ void AdvanceSettings::OnObjectEvent(lv_obj_t* obj, lv_event_t event)
     // HACK: Escape now if the event was triggered after exit (lvgl event handler can trigger after destructor call)
     if(load_scene != SCENE::ADVANCED_SETTINGS)
         return;
+
+    if(event == LV_EVENT_FOCUSED)
+        UpdateHelperText();
 
     if(event == LV_EVENT_PRESSED) {
         if(obj == btnAdvanceInterpolation)

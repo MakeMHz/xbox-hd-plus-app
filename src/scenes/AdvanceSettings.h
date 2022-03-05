@@ -24,4 +24,9 @@ class AdvanceSettings : public Scene {
 
         //
         EEPROM_T mEEPROM;
+
+        // Help panel objects
+        void UpdateHelperText();
+        lv_obj_t *contHelp;
+        lv_obj_t *contHelpLabel;
 };
