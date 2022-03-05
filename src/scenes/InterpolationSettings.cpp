@@ -20,7 +20,7 @@ InterpolationSettings::InterpolationSettings()
 {
     // Set the size and position of our scene
     lv_obj_set_size(cont, 320, 420);
-    lv_obj_set_pos(screen, 380, 20);
+    lv_obj_set_pos(cont, 380, 20);
     lv_cont_set_layout(cont, LV_LAYOUT_COLUMN_LEFT);
 
     //
