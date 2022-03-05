@@ -18,7 +18,7 @@ class SystemSettings : public Scene {
 
         //
         lv_obj_t *btnSystemAudioSettings;
-        ButtonGroup *buttonMatrix[8];
+        ButtonGroup *buttonMatrix[2];
 
         XboxConfig xboxConfig;
 
