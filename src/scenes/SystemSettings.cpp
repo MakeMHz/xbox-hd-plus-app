@@ -78,7 +78,7 @@ SystemSettings::SystemSettings()
 
     // We have to set the buttons values manually
     // Video Modes
-    lv_btnmatrix_set_btn_ctrl_all(buttonMatrix[0]->buttons, LV_BTNMATRIX_CTRL_CHECK_STATE);
+    lv_btnmatrix_clear_btn_ctrl_all(buttonMatrix[0]->buttons, LV_BTNMATRIX_CTRL_CHECK_STATE);
 
     if(xboxConfig.VideoFlags & XC_VIDEO_FLAGS_HDTV_480p)
         lv_btnmatrix_set_btn_ctrl(buttonMatrix[0]->buttons, 0, LV_BTNMATRIX_CTRL_CHECK_STATE);
