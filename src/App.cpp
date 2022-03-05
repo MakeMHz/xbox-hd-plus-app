@@ -42,7 +42,10 @@ Update *update;
 
 int main_app(void)
 {
-    XVideoSetMode(width, height, LV_COLOR_DEPTH, REFRESH_DEFAULT);
+    if(!XVideoSetMode(width, height, LV_COLOR_DEPTH, REFRESH_DEFAULT)) {
+        HalReturnToFirmware(HalRebootRoutine);
+        return 0;
+    }
 
     // Mount the C partition
     nxMountDrive('C', "\\Device\\Harddisk0\\Partition2\\");
