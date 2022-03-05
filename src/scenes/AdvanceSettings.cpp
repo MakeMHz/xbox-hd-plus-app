@@ -126,7 +126,8 @@ void AdvanceSettings::UpdateHelperText() {
     if(focus == buttonMatrix[2]->buttons) {
         lv_label_set_text(contHelpLabel, helpAutoBlank);
         lv_obj_set_hidden(contHelp, false);
-    }
+    } else
+        lv_obj_set_hidden(contHelp, true);
 };
 
 void AdvanceSettings::OnObjectEvent(lv_obj_t* obj, lv_event_t event)
