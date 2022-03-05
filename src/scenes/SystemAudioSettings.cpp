@@ -19,7 +19,7 @@ static const char * optionDTS[]       = { "Disabled", "Enabled", "" };
 static const char helpAudioSettings[] =
     "The audio mode options controls how software on the Xbox can output audio.\n\n"
     "Surround sound will only work correctly if the receiving device supports the enabled audio codec.\n\n"
-    "* This is the same settings from the Microsoft dashboard.";
+    "* These are the same settings from the Microsoft dashboard.";
 
 static void ButtonEventHandler(lv_obj_t * obj, lv_event_t event) {
     SystemAudioSettings* scene = static_cast<SystemAudioSettings *>(obj->user_data);
