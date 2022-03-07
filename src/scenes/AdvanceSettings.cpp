@@ -20,7 +20,7 @@ static const char helpAutoBlank[] =
 static const char helpAutoRegionSwitch[] =
     "With 'Auto Region Switching' enabled, the HD+ kernel patch will detect when a software title "
     "is region locked and will automatically patch the system region in memory.\n\n"
-    "Some none NTSC software may ignore the region setting and run at a higher resolution under NTSC. "
+    "Some non-NTSC software may ignore the region setting and run at a higher resolution under NTSC. "
     "For those games it should be safe to turn off this option.\n\n"
     "For example, Dead or Alive 3 (EUR) ignores the console's system region and will run "
     "natively at 480p/NTSC if the system is set to NTSC.\n\n"
