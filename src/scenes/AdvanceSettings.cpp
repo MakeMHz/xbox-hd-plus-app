@@ -17,6 +17,15 @@ static const char helpAutoBlank[] =
     "when a software title calls AV_OPTION_BLANK_SCREEN and during kernel calls to AvSetDisplayMode().\n\n"
     "This option should be safe to leave on and is left for debugging/exploration purposes.";
 
+static const char helpAutoRegionSwitch[] =
+    "With 'Auto Region Switching' enabled, the HD+ kernel patch will detect when a software title "
+    "is region locked and will automatically patch the system region in memory.\n\n"
+    "Some none NTSC software may ignore the region setting and run at a higher resolution under NTSC. "
+    "For those games it should be safe to turn off this option.\n\n"
+    "For example, Dead or Alive 3 (EUR) ignores the console's system region and will run "
+    "natively at 480p/NTSC if the system is set to NTSC.\n\n"
+    "This option should be safe to leave on and is left for debugging/exploration purposes.";
+
 static void ButtonEventHandler(lv_obj_t * obj, lv_event_t event) {
     AdvanceSettings* scene = static_cast<AdvanceSettings *>(obj->user_data);
     scene->OnObjectEvent(obj, event);
@@ -47,18 +56,22 @@ AdvanceSettings::AdvanceSettings()
     //
     buttonMatrix[0] = new ButtonGroup(cont, group, "HDMI Colorspace", optionColorSpace, (uint8_t *)&gEEPROM->current.colorspace);
     buttonMatrix[1] = new ButtonGroup(cont, group, "Upscaling Interpolation", optionUpscaling, (uint8_t *)&gEEPROM->current.interpolation);
-    buttonMatrix[2] = new ButtonGroup(cont, group, "Auto Video Blanking", optionAutoBlank, (uint8_t *)&gEEPROM->current.auto_video_blank);
+
+    btnAutoVideoBlanking = new SwitchLabel(cont, group, "Auto Video Blanking", gEEPROM->current.auto_video_blank);
+    btnAutoRegionSwitch  = new SwitchLabel(cont, group, "Auto Region Switching", gEEPROM->current.auto_region_switch);
 
     // Add line break between button options and button scenes
     CreateLineBreak();
 
-    // Draw our child scene buttons
-    btnAdvanceInterpolation  = CreateSubSceneButton("Advance Interpolation");
-
     // Register a callbacks
     lv_group_add_obj_warp(group, ButtonEventHandler, static_cast<lv_obj_user_data_t>(this), buttonMatrix[0]->buttons);
     lv_group_add_obj_warp(group, ButtonEventHandler, static_cast<lv_obj_user_data_t>(this), buttonMatrix[1]->buttons);
-    lv_group_add_obj_warp(group, ButtonEventHandler, static_cast<lv_obj_user_data_t>(this), buttonMatrix[2]->buttons);
+
+    lv_group_add_obj_warp(group, ButtonEventHandler, static_cast<lv_obj_user_data_t>(this), btnAutoVideoBlanking->lv_switch);
+    lv_group_add_obj_warp(group, ButtonEventHandler, static_cast<lv_obj_user_data_t>(this), btnAutoRegionSwitch->lv_switch);
+
+    // Draw our child scene buttons
+    btnAdvanceInterpolation  = CreateSubSceneButton("Advance Interpolation");
 
     // Draw back button in default location
     DrawBackButton();
@@ -109,9 +122,10 @@ lv_obj_t *AdvanceSettings::CreateSubSceneButton(const char *text) {
 
 AdvanceSettings::~AdvanceSettings(void)
 {
-    gEEPROM->current.colorspace       = (uint8_t)lv_btnmatrix_get_active_btn(buttonMatrix[0]->buttons);
-    gEEPROM->current.interpolation    = (uint8_t)lv_btnmatrix_get_active_btn(buttonMatrix[1]->buttons);
-    gEEPROM->current.auto_video_blank = (uint8_t)lv_btnmatrix_get_active_btn(buttonMatrix[2]->buttons);
+    gEEPROM->current.colorspace         = (uint8_t)lv_btnmatrix_get_active_btn(buttonMatrix[0]->buttons);
+    gEEPROM->current.interpolation      = (uint8_t)lv_btnmatrix_get_active_btn(buttonMatrix[1]->buttons);
+    gEEPROM->current.auto_video_blank   = (uint8_t)lv_switch_get_state(btnAutoVideoBlanking->lv_switch);
+    gEEPROM->current.auto_region_switch = (uint8_t)lv_switch_get_state(btnAutoRegionSwitch->lv_switch);
 
     // Save EEPROM
     gEEPROM->save();
@@ -123,8 +137,11 @@ AdvanceSettings::~AdvanceSettings(void)
 void AdvanceSettings::UpdateHelperText() {
     lv_obj_t *focus = lv_group_get_focused(group);
 
-    if(focus == buttonMatrix[2]->buttons) {
+    if(focus == btnAutoVideoBlanking->lv_switch) {
         lv_label_set_text(contHelpLabel, helpAutoBlank);
+        lv_obj_set_hidden(contHelp, false);
+    } else if(focus == btnAutoRegionSwitch->lv_switch) {
+        lv_label_set_text(contHelpLabel, helpAutoRegionSwitch);
         lv_obj_set_hidden(contHelp, false);
     } else
         lv_obj_set_hidden(contHelp, true);

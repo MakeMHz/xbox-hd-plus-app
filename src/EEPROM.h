@@ -65,6 +65,7 @@ typedef struct EEPROM_T {
     uint8_t  interpolation_x_weight;
     uint8_t  interpolation_y_weight;
     uint8_t  auto_video_blank;
+    uint8_t  auto_region_switch;
     uint8_t  PADDING[1024];
 } __attribute__((packed)) EEPROM_T;
 
