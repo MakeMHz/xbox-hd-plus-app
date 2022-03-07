@@ -1,6 +1,7 @@
 #pragma once
 #include <lvgl.h>
 #include "lvgl-extra/ButtonGroup.h"
+#include "lvgl-extra/SwitchLabel.h"
 
 #include "EEPROM.h"
 #include "Scene.h"
@@ -17,6 +18,8 @@ class AdvanceSettings : public Scene {
 
         //
         ButtonGroup *buttonMatrix[3];
+        SwitchLabel *btnAutoVideoBlanking;
+        SwitchLabel *btnAutoRegionSwitch;
 
         //
         lv_obj_t *btnAdvanceInterpolation;

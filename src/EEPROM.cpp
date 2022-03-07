@@ -54,6 +54,9 @@ void EEPROM::clear() {
 
     // Enable 'Auto Video Blanking' by default
     current.auto_video_blank = 1;
+
+    // Enable 'Auto Region Switching' by default
+    current.auto_region_switch = 1;
 }
 
 void EEPROM::save() {
