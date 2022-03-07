@@ -6,6 +6,7 @@
 #include <hal/xbox.h>
 #include <nxdk/mount.h>
 #include <nxdk/path.h>
+#include <xboxkrnl/xboxkrnl.h>
 
 #include "App.h"
 #include "Assets.h"
@@ -66,6 +67,9 @@ int main_app(void)
     // TODO: If it's from the DVD drive then prompt to install? Or at least show an warning/error.
     checkInstallDir();
     checkInstallDirPatch();
+
+    // System checks
+    checkSystemRegion();
 
     drawFirmwareVersion();
     drawSoftwareVersion();
@@ -367,4 +371,18 @@ void checkInstallDirPatch() {
     if(!file)
         DisplayFatalError("ERROR: XboxHD+ installation corrupt.\n(Missing File: kp.bin)\n\nPlease verify/reinstall the XboxHD+ files.");
     fclose(file);
+}
+
+void checkSystemRegion() {
+    ULONG type, value;
+
+    // AV Region
+    ExQueryNonVolatileSetting(259, &type,  &value, sizeof(value), NULL);
+    if(((value & 0xFF00) >> 8) != 1)
+        DisplayFatalError("ERROR: Invalid system AV region. Please change AV region to NTSC before continuing.");
+
+    // Game region
+    ExQueryNonVolatileSetting(260, &type,  &value, sizeof(value), NULL);
+    if(value != 1)
+        DisplayFatalError("ERROR: Invalid system game region. Please change game region to NTSC before continuing.");
 }

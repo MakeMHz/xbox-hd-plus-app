@@ -21,3 +21,5 @@ void checkFirmwareLastest();
 
 void checkInstallDir();
 void checkInstallDirPatch();
+
+void checkSystemRegion();
