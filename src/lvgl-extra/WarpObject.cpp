@@ -24,7 +24,10 @@ bool WarpObjectOnEvent(lv_obj_t* obj, lv_event_t event, lv_group_t *g)
 
     if(event == LV_EVENT_KEY)
     {
-        if(lv_debug_check_obj_type(obj, "lv_btn")) {
+        if(
+            lv_debug_check_obj_type(obj, "lv_btn") ||
+            lv_debug_check_obj_type(obj, "lv_switch")
+        ) {
             update_group_focus = true;
         }
 
