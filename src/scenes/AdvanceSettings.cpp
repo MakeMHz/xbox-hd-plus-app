@@ -122,8 +122,9 @@ lv_obj_t *AdvanceSettings::CreateSubSceneButton(const char *text) {
 
 AdvanceSettings::~AdvanceSettings(void)
 {
-    gEEPROM->current.colorspace         = (uint8_t)lv_btnmatrix_get_active_btn(buttonMatrix[0]->buttons);
-    gEEPROM->current.interpolation      = (uint8_t)lv_btnmatrix_get_active_btn(buttonMatrix[1]->buttons);
+    // Store values since we can not trust lvgl's events to give us the correct states
+    gEEPROM->current.colorspace         = (uint8_t)lv_btnmatrix_get_btn_ctrl(buttonMatrix[0]->buttons, 1, LV_BTNMATRIX_CTRL_CHECK_STATE);
+    gEEPROM->current.interpolation      = (uint8_t)lv_btnmatrix_get_btn_ctrl(buttonMatrix[1]->buttons, 1, LV_BTNMATRIX_CTRL_CHECK_STATE);
     gEEPROM->current.auto_video_blank   = (uint8_t)lv_switch_get_state(btnAutoVideoBlanking->lv_switch);
     gEEPROM->current.auto_region_switch = (uint8_t)lv_switch_get_state(btnAutoRegionSwitch->lv_switch);
 

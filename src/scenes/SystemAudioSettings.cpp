@@ -88,21 +88,15 @@ SystemAudioSettings::SystemAudioSettings()
 SystemAudioSettings::~SystemAudioSettings(void)
 {
     // Store values since we can not trust lvgl's events to give us the correct states
-    if(lv_btnmatrix_get_active_btn(buttonMatrix[0]->buttons) == 1) {
+    if(lv_btnmatrix_get_btn_ctrl(buttonMatrix[0]->buttons, 1, LV_BTNMATRIX_CTRL_CHECK_STATE)) {
         xboxConfig.SetAudioMode(XC_AUDIO_FLAGS_STEREO);
-    } else if(lv_btnmatrix_get_active_btn(buttonMatrix[0]->buttons) == 2) {
+    } else if(lv_btnmatrix_get_btn_ctrl(buttonMatrix[0]->buttons, 2, LV_BTNMATRIX_CTRL_CHECK_STATE)) {
         xboxConfig.SetAudioMode(XC_AUDIO_FLAGS_SURROUND);
     } else
         xboxConfig.SetAudioMode(XC_AUDIO_FLAGS_MONO);
 
-    DbgPrint("test2 %d %d\n", lv_btnmatrix_get_active_btn(buttonMatrix[1]->buttons) == 1, lv_btnmatrix_get_active_btn(buttonMatrix[2]->buttons) == 1);
-    DbgPrint("test3 %d %d %d\n",
-        lv_btnmatrix_get_btn_ctrl(buttonMatrix[0]->buttons, 2, LV_BTNMATRIX_CTRL_CHECK_STATE),
-        lv_btnmatrix_get_btn_ctrl(buttonMatrix[1]->buttons, 1, LV_BTNMATRIX_CTRL_CHECK_STATE),
-        lv_btnmatrix_get_btn_ctrl(buttonMatrix[2]->buttons, 1, LV_BTNMATRIX_CTRL_CHECK_STATE)
-    );
-    xboxConfig.SetAudioAC3(lv_btnmatrix_get_active_btn(buttonMatrix[1]->buttons) == 1);
-    xboxConfig.SetAudioDTS(lv_btnmatrix_get_active_btn(buttonMatrix[2]->buttons) == 1);
+    xboxConfig.SetAudioAC3(lv_btnmatrix_get_btn_ctrl(buttonMatrix[1]->buttons, 1, LV_BTNMATRIX_CTRL_CHECK_STATE));
+    xboxConfig.SetAudioDTS(lv_btnmatrix_get_btn_ctrl(buttonMatrix[2]->buttons, 1, LV_BTNMATRIX_CTRL_CHECK_STATE));
 
     // Save EEPROM
     xboxConfig.Save();

@@ -50,6 +50,15 @@ InterpolationSettings::InterpolationSettings()
 
 InterpolationSettings::~InterpolationSettings(void)
 {
+    // Store values since we can not trust lvgl's events to give us the correct states
+    gEEPROM->current.interpolation_x_scale  = (uint8_t)lv_btnmatrix_get_btn_ctrl(buttonMatrix[0]->buttons, 1, LV_BTNMATRIX_CTRL_CHECK_STATE);
+    gEEPROM->current.interpolation_y_scale  = (uint8_t)lv_btnmatrix_get_btn_ctrl(buttonMatrix[1]->buttons, 1, LV_BTNMATRIX_CTRL_CHECK_STATE);
+    gEEPROM->current.interpolation_x_weight = (uint8_t)lv_btnmatrix_get_btn_ctrl(buttonMatrix[2]->buttons, 1, LV_BTNMATRIX_CTRL_CHECK_STATE);
+    gEEPROM->current.interpolation_y_weight = (uint8_t)lv_btnmatrix_get_btn_ctrl(buttonMatrix[3]->buttons, 1, LV_BTNMATRIX_CTRL_CHECK_STATE);
+
+    // Save EEPROM
+    gEEPROM->save();
+
     // TODO: Clean up all of the other objects.
     lv_obj_del(screen);
 }
@@ -59,16 +68,9 @@ void InterpolationSettings::OnObjectEvent(lv_obj_t* obj, lv_event_t event)
     // Preform warp check on event
     if(WarpObjectOnEvent(obj, event, group)) { return; }
 
-    if(event == LV_EVENT_VALUE_CHANGED) {
-        if(obj == buttonMatrix[0]->buttons)
-            gEEPROM->current.interpolation_x_scale = (uint8_t)lv_btnmatrix_get_active_btn(obj);
-        if(obj == buttonMatrix[1]->buttons)
-            gEEPROM->current.interpolation_y_scale = (uint8_t)lv_btnmatrix_get_active_btn(obj);
-        if(obj == buttonMatrix[2]->buttons)
-            gEEPROM->current.interpolation_x_weight = (uint8_t)lv_btnmatrix_get_active_btn(obj);
-        if(obj == buttonMatrix[3]->buttons)
-            gEEPROM->current.interpolation_y_weight = (uint8_t)lv_btnmatrix_get_active_btn(obj);
-    }
+    // HACK: Escape now if the event was triggered after exit (lvgl event handler can trigger after destructor call)
+    if(load_scene != SCENE::INTERPOLATION_SETTINGS)
+        return;
 
     if(event == LV_EVENT_KEY)
     {
