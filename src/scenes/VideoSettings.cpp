@@ -73,7 +73,13 @@ VideoSettings::~VideoSettings(void)
 {
     // Store values now since we can not trust lvgl's events to give us the correct states
     gEEPROM->current.output_resolution = (uint8_t)lv_btnmatrix_get_btn_ctrl(buttonMatrix[0]->buttons, 1, LV_BTNMATRIX_CTRL_CHECK_STATE);
-    gEEPROM->current.widescreen = (uint8_t)lv_btnmatrix_get_btn_ctrl(buttonMatrix[1]->buttons, 1, LV_BTNMATRIX_CTRL_CHECK_STATE);
+    if((uint8_t)lv_btnmatrix_get_btn_ctrl(buttonMatrix[1]->buttons, 1, LV_BTNMATRIX_CTRL_CHECK_STATE)) {
+        gEEPROM->current.widescreen = 1;
+    } else if((uint8_t)lv_btnmatrix_get_btn_ctrl(buttonMatrix[1]->buttons, 2, LV_BTNMATRIX_CTRL_CHECK_STATE)) {
+        gEEPROM->current.widescreen = 2;
+    } else {
+        gEEPROM->current.widescreen = 0;
+    }
 
     // Save EEPROM
     gEEPROM->save();
