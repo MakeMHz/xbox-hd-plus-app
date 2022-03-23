@@ -21,11 +21,13 @@ CFLAGS += \
 	-I$(CURDIR)/include \
 	-I$(CURDIR)/src \
 	-DLWIP_HTTPC_HAVE_FILE_IO \
+	-DSDL_DISABLE_JOYSTICK_INIT_DELAY \
 	-O2
 CXXFLAGS += \
 	-I$(CURDIR)/include \
 	-I$(CURDIR)/src \
 	-DLWIP_HTTPC_HAVE_FILE_IO \
+	-DSDL_DISABLE_JOYSTICK_INIT_DELAY \
 	-O2
 
 #Include lvgl main library
