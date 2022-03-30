@@ -362,7 +362,7 @@ void checkInstallDir() {
     char launchPath[MAX_PATH];
     nxGetCurrentXbeNtPath(launchPath);
 
-    if(!strcmp(launchPath, allowedPath) == 0)
+    if(strcmp(launchPath, allowedPath) != 0)
         DisplayFatalError("ERROR: The XboxHD app must be installed in\nC:\\xboxhd");
 }
 
