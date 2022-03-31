@@ -66,6 +66,19 @@ typedef struct EEPROM_T {
     uint8_t  interpolation_y_weight;
     uint8_t  auto_video_blank;
     uint8_t  auto_region_switch;
+    uint8_t  prescale_fix_disable;
+
+    // AVI Infoframe Overrides
+    uint8_t   avi_info_override;
+    uint8_t   picture_aspect_ratio;
+    uint8_t   active_format_aspect_ratio;
+    uint8_t   active_format_status;
+    uint8_t   bar_info_present;
+    uint16_t  bar_info_etb;
+    uint16_t  bar_info_sbb;
+    uint16_t  bar_info_elb;
+    uint16_t  bar_info_srb;
+
     uint8_t  PADDING[1024];
 } __attribute__((packed)) EEPROM_T;
 
