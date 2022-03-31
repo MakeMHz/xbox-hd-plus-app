@@ -3,6 +3,7 @@
 #include <lvgl.h>
 
 #include "lvgl-extra/ButtonGroup.h"
+#include "lvgl-extra/SwitchLabel.h"
 #include "lvgl-extra/WarpObject.h"
 
 #include "App.h"
@@ -14,6 +15,7 @@ static const char * optionWidescreen[] = { "Auto", "Force", "Never", "" };
 static const char helpTargetResolution[] =
     "Target resolution controls the minimum output resolution.\n\n"
     "Video output will be upscaled if the Xbox's framebuffer is smaller than the set target resolution. \n\n"
+    "Original will output a 1:1 video signal of the active framebuffer with no scaling.\n\n"
     "This option does not limit the output resolution. (For example, software can still run at 1080i, if the "
     "'Video Mode' option is enabled for that resolution, and 'Target Resolution' is set to 720p)";
 
@@ -22,6 +24,12 @@ static const char helpWidescreen[] =
     "Auto:  Automatically stretch anamorphic 640x480 to 16:9.\n\n"
     "Force: Always stretch 640x480 content to 16:9.\n\n"
     "Never: Never stretch 640x480 content to 16:9.";
+
+static const char helpPrescaleCorrection[] =
+    "The prescale correction option will scale the video output of 640x480 4:3 content framed in 480p "
+    "so that the final displayed image has a true 4:3 aspect ratio.\n\n"
+    "This due to how most displays unpack\n4:3 480p content and ignore AVI Infoframe bar data.\n\n"
+    "This option only has an affect, and is only needed, when the output target is set to 480p.";
 
 static void ButtonEventHandler(lv_obj_t * obj, lv_event_t event) {
     VideoSettings* scene = static_cast<VideoSettings *>(obj->user_data);
@@ -55,9 +63,13 @@ VideoSettings::VideoSettings()
     buttonMatrix[0] = new ButtonGroup(cont, group, "Target Resolution (Upscale)", optionResolution, (uint8_t *)&gEEPROM->current.output_resolution);
     buttonMatrix[1] = new ButtonGroup(cont, group, "4:3 Widescreen", optionWidescreen, (uint8_t *)&gEEPROM->current.widescreen);
 
+    //
+    btnPrescaleCorrection = new SwitchLabel(cont, group, "Pre-scale 480p Correction", !gEEPROM->current.prescale_fix_disable);
+
     // Register a callbacks
     lv_group_add_obj_warp(group, ButtonEventHandler, static_cast<lv_obj_user_data_t>(this), buttonMatrix[0]->buttons);
     lv_group_add_obj_warp(group, ButtonEventHandler, static_cast<lv_obj_user_data_t>(this), buttonMatrix[1]->buttons);
+    lv_group_add_obj_warp(group, ButtonEventHandler, static_cast<lv_obj_user_data_t>(this), btnPrescaleCorrection->lv_switch);
 
     // Draw back button in default location
     DrawBackButton();
@@ -81,6 +93,8 @@ VideoSettings::~VideoSettings(void)
         gEEPROM->current.widescreen = 0;
     }
 
+    gEEPROM->current.prescale_fix_disable = !(uint8_t)lv_switch_get_state(btnPrescaleCorrection->lv_switch);
+
     // Save EEPROM
     gEEPROM->save();
 
@@ -96,6 +110,9 @@ void VideoSettings::UpdateHelperText() {
         lv_obj_set_hidden(contHelp, false);
     } else if(focus == buttonMatrix[1]->buttons) {
         lv_label_set_text(contHelpLabel, helpWidescreen);
+        lv_obj_set_hidden(contHelp, false);
+    } else if(focus == btnPrescaleCorrection->lv_switch) {
+        lv_label_set_text(contHelpLabel, helpPrescaleCorrection);
         lv_obj_set_hidden(contHelp, false);
     } else
         lv_obj_set_hidden(contHelp, true);
