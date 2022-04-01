@@ -20,6 +20,7 @@ typedef struct EEPROM_T {
     uint8_t  auto_video_blank;
     uint8_t  auto_region_switch;
     uint8_t  prescale_fix_disable;
+    uint8_t  disable_480P_16_9;
 
     // AVI Infoframe Overrides
     uint8_t   avi_info_override;

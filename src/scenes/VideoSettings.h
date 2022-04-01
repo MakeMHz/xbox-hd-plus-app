@@ -14,6 +14,7 @@ class VideoSettings : public Scene {
     private:
         ButtonGroup *buttonMatrix[2];
         SwitchLabel *btnPrescaleCorrection;
+        SwitchLabel *btnDisable480p16X9;
 
         // Help panel objects
         void UpdateHelperText();
