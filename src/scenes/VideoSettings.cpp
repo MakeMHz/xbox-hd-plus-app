@@ -31,6 +31,12 @@ static const char helpPrescaleCorrection[] =
     "This due to how most displays unpack\n4:3 480p content and ignore AVI Infoframe bar data.\n\n"
     "This option only has an affect, and is only needed, when the output target is set to 480p.";
 
+static const char helpDisable480p16X9[] =
+    "Retail NTSC titles are allowed to request 480P without explictly stating if the desired "
+    "picture aspect ratio is 16:9 (both for 720x480 and 640x480).\n\n"
+    "Enabling this option is the best assumption for most retail games and will automaticly use "
+    "anamphoric widescreen in those cases (with respects to the '4:3 Widescreen' option).";
+
 static void ButtonEventHandler(lv_obj_t * obj, lv_event_t event) {
     VideoSettings* scene = static_cast<VideoSettings *>(obj->user_data);
     scene->OnObjectEvent(obj, event);
@@ -65,11 +71,13 @@ VideoSettings::VideoSettings()
 
     //
     btnPrescaleCorrection = new SwitchLabel(cont, group, "Pre-scale 480p Correction", !gEEPROM->current.prescale_fix_disable);
+    btnDisable480p16X9    = new SwitchLabel(cont, group, "Assume 16:9 480p(HD)", !gEEPROM->current.disable_480P_16_9);
 
     // Register a callbacks
     lv_group_add_obj_warp(group, ButtonEventHandler, static_cast<lv_obj_user_data_t>(this), buttonMatrix[0]->buttons);
     lv_group_add_obj_warp(group, ButtonEventHandler, static_cast<lv_obj_user_data_t>(this), buttonMatrix[1]->buttons);
     lv_group_add_obj_warp(group, ButtonEventHandler, static_cast<lv_obj_user_data_t>(this), btnPrescaleCorrection->lv_switch);
+    lv_group_add_obj_warp(group, ButtonEventHandler, static_cast<lv_obj_user_data_t>(this), btnDisable480p16X9->lv_switch);
 
     // Draw back button in default location
     DrawBackButton();
@@ -113,6 +121,9 @@ void VideoSettings::UpdateHelperText() {
         lv_obj_set_hidden(contHelp, false);
     } else if(focus == btnPrescaleCorrection->lv_switch) {
         lv_label_set_text(contHelpLabel, helpPrescaleCorrection);
+        lv_obj_set_hidden(contHelp, false);
+    } else if(focus == btnDisable480p16X9->lv_switch) {
+        lv_label_set_text(contHelpLabel, helpDisable480p16X9);
         lv_obj_set_hidden(contHelp, false);
     } else
         lv_obj_set_hidden(contHelp, true);
