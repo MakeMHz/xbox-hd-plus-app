@@ -196,7 +196,7 @@ void checkPatchVersion() {
 
         lv_obj_t * mbox1 = lv_msgbox_create(lv_scr_act(), NULL);
         lv_msgbox_set_text_fmt(mbox1,
-            "Kernel patch version (v%d.%d.%d) incompatible.\nIt appears your currently running a none XboxHD+ patched BIOS.\nPlease verify that your BIOS is patched correctly.\n(If you have a XboxHDMI board then make sure to follow the upgrade guide!)",
+            "Kernel patch version (v%d.%d.%d) is incompatible.\nIt appears that you're currently running a non-XboxHD+ patched BIOS.\nPlease verify that your BIOS is patched correctly.\n(If you have an XboxHDMI board, then make sure to follow the upgrade guide!)",
             current_patch_version.major, current_patch_version.minor, current_patch_version.patch
         );
 
