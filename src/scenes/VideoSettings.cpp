@@ -102,6 +102,7 @@ VideoSettings::~VideoSettings(void)
     }
 
     gEEPROM->current.prescale_fix_disable = !(uint8_t)lv_switch_get_state(btnPrescaleCorrection->lv_switch);
+    gEEPROM->current.disable_480P_16_9    = !(uint8_t)lv_switch_get_state(btnDisable480p16X9->lv_switch);
 
     // Save EEPROM
     gEEPROM->save();
