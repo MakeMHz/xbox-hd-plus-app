@@ -33,6 +33,11 @@ typedef struct EEPROM_T {
     uint16_t  bar_info_elb;
     uint16_t  bar_info_srb;
 
+    // Pixel Clock Delay Override
+    uint8_t   pixel_clock_delay_override;
+    uint8_t   pixel_clock_delay;
+    uint8_t   pixel_clock_delay_neg;
+
     uint8_t  PADDING[1024];
 } __attribute__((packed)) EEPROM_T;
 
