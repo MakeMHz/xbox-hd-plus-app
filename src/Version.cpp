@@ -5,7 +5,7 @@
 #include "System.h"
 
 // Version of this software
-semver_t current_version = { 2, 1, 10 };
+semver_t current_version = { 2, 2, 1 };
 
 // The HD+ firmware version that this copy of the software supports.
 // Used before executing commands on the MCU and for the 'EEPROM'
