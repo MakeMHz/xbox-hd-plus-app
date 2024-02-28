@@ -12,15 +12,30 @@ int main_loader(void)
     if(SDL_Init(SDL_INIT_GAMECONTROLLER) != 0)
         return 0;
 
-    if(SDL_NumJoysticks() < 1)
-        return 0;
-
-    if((pad = SDL_GameControllerOpen(0)) == NULL)
-        return 0;
-
     // TODO: Clean up
     for(uint32_t loop = 0; loop < 100; loop++) {
         SDL_GameControllerUpdate();
+
+        SDL_Event e;
+        while(SDL_PollEvent(&e)) {
+            if(e.type == SDL_CONTROLLERDEVICEADDED) {
+                SDL_GameController *new_pad = SDL_GameControllerOpen(e.cdevice.which);
+                if (pad == NULL) {
+                    pad = new_pad;
+                }
+            }
+            else if (e.type == SDL_CONTROLLERDEVICEREMOVED) {
+                if (pad == SDL_GameControllerFromInstanceID(e.cdevice.which)) {
+                    pad = NULL;
+                }
+                SDL_GameControllerClose(SDL_GameControllerFromInstanceID(e.cdevice.which));
+            }
+            else if (e.type == SDL_CONTROLLERBUTTONDOWN) {
+                if (e.cbutton.button == SDL_CONTROLLER_BUTTON_START) {
+                    pad = (SDL_GameControllerFromInstanceID(e.cdevice.which));
+                }
+            }
+        }
 
         if(SDL_GameControllerGetButton(pad, SDL_CONTROLLER_BUTTON_X)) {
             // Combo (X + A) Load configuration app
