@@ -11,3 +11,6 @@
 	url = git@github.com:MakeMHz/lvgl-sdl.git
 	path = 3rdparty/lvgl-sdl
     branch = xbox-hd-app
+[submodule "3rdparty/nxdk"]
+	path = 3rdparty/nxdk
+	url = git@github.com:XboxDev/nxdk.git
